@@ -44,7 +44,7 @@ namespace SingletonDesignPattern
             //db.ExecuteMySQL("INSERT INTO Orders VALUES(23, 2023, 1)");
             //db.ExecuteMySQL("INSERT INTO ThemesByOrder VALUES(1, 1, 1, 23)");
 
-            
+
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
@@ -55,8 +55,10 @@ namespace SingletonDesignPattern
             db.SelectRecords(dataGridView3, "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
                 "join Students on ThemesByOrder.Student = Students.Code " +
                 "join Orders on ThemesByOrder.tOrder = Orders.Number");
+
+            db.SelectRecords(dataGridView4, "Themes", "");
         }
-       
+
         /*
         protected void MyClosedHandler(object sender, EventArgs e)
         {
@@ -68,15 +70,12 @@ namespace SingletonDesignPattern
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(((ComboBox)sender).SelectedIndex == 0)
+            if (((ComboBox)sender).SelectedIndex == 0)
             {
                 db.SelectRecords(dataGridView1, "Themes", "");
                 return;
             }
-            db.SelectRecords(dataGridView1, "Themes",$"WHERE tName = '{comboBox1.SelectedItem.ToString()}'");
-
-
-
+            db.SelectRecords(dataGridView1, "Themes", $"WHERE tName = '{comboBox1.SelectedItem.ToString()}'");
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -101,6 +100,14 @@ namespace SingletonDesignPattern
                 db.SelectRecords(dataGridView2, "Students", $"join Class on Students.Class = Class.number WHERE  Class.Course = '{comboBox3.SelectedItem.ToString()}' and  Class.Cipher = '{comboBox2.SelectedItem.ToString()}'");
                 return;
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox1.Enabled = checkBox1.Checked ? true : false;
+            textBox2.Enabled = checkBox1.Checked ? true : false;
+            comboBox4.Enabled = checkBox1.Checked ? true : false;
+            richTextBox1.Enabled = checkBox1.Checked ? true : false;
         }
     }
 }

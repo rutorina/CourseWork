@@ -150,7 +150,6 @@ namespace dbManager
             {
                 //logger.Log("SELECT cipher FROM class");
                 List<string> Fields = new List<string>();
-                //cmd.CommandText = "SELECT cipher FROM class";
                 switch (name)
                 {
                     case "Theme":

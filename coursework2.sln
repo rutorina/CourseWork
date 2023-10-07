@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33423.256
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingletonDesignPattern", "SingletonDesignPattern\SingletonDesignPattern.csproj", "{F3E86706-08C0-4AD5-89C1-DD84927A5AF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "courseWork", "SingletonDesignPattern\courseWork.csproj", "{F3E86706-08C0-4AD5-89C1-DD84927A5AF6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dbManager", "dbManager\dbManager.csproj", "{02A8B16C-5E2D-4514-98D9-BD88645B1B60}"
 EndProject
