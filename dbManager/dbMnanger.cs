@@ -182,6 +182,9 @@ namespace dbManager
                     case "Course":
                         cmd.CommandText = "SELECT DISTINCT Course from Class";
                         break;
+                    case "Subject":
+                        cmd.CommandText = "SELECT DISTINCT sName from Subjects";
+                        break;
                     default:
                         break;
                 }
@@ -234,6 +237,26 @@ namespace dbManager
                 MessageBox.Show(ex.Message);
             }
             connection.Close();
+        }
+
+        public string GetSubjectNameByID(string id)
+        {
+            try
+            {
+                string res = null;
+                connection.Open();
+                cmd.CommandText = $"SELECT sName FROM Subjects WHERE Code = '{id}'";
+                MySqlDataReader r = cmd.ExecuteReader();
+                r.Read();
+                res = r.GetString(0);
+                connection.Close();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
         }
 
         /*

@@ -48,14 +48,15 @@ namespace SingletonDesignPattern
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
+            comboBox5.SelectedIndex = 0;
             db.GetAllVar(comboBox1, "Theme");
             db.GetAllVar(comboBox2, "Class");
             db.GetAllVar(comboBox3, "Course");
+            db.GetAllVar(comboBox4, "Subject");
 
             db.SelectRecords(dataGridView3, "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
                 "join Students on ThemesByOrder.Student = Students.Code " +
                 "join Orders on ThemesByOrder.tOrder = Orders.Number");
-
             db.SelectRecords(dataGridView4, "Themes", "");
         }
 
@@ -108,11 +109,25 @@ namespace SingletonDesignPattern
             textBox2.Enabled = checkBox1.Checked ? true : false;
             comboBox4.Enabled = checkBox1.Checked ? true : false;
             richTextBox1.Enabled = checkBox1.Checked ? true : false;
+            button1.Enabled = checkBox1.Checked ? true : false;
         }
 
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            int curRow = e.RowIndex;
+            int i = 1;
+            List<string> currentData = new List<string>();
+            foreach (DataGridViewCell s in dataGridView1.Rows[e.RowIndex].Cells)
+            {
+                //panel1.Controls[i].Text = s.Value.ToString();
+                currentData.Add(s.Value.ToString());
+                i += 2;
+            }
 
+            textBox2.Text = currentData[0];
+            textBox1.Text = currentData[1];
+            comboBox4.SelectedItem = db.GetSubjectNameByID(currentData[2]);
+            richTextBox1.Text = currentData[3];
         }
     }
 }
