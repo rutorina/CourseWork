@@ -53,11 +53,13 @@ namespace SingletonDesignPattern
             db.GetAllVar(comboBox2, "Class");
             db.GetAllVar(comboBox3, "Course");
             db.GetAllVar(comboBox4, "Subject");
+            db.GetAllVar(comboBox6, "Class");
 
             db.SelectRecords(dataGridView3, "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
                 "join Students on ThemesByOrder.Student = Students.Code " +
                 "join Orders on ThemesByOrder.tOrder = Orders.Number");
             db.SelectRecords(dataGridView4, "Themes", "");
+            db.SelectRecords(dataGridView5, "Students", "");
         }
 
         /*
@@ -67,7 +69,7 @@ namespace SingletonDesignPattern
         }*/
 
         dbMnanger db;
-
+        int curRow;
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -117,17 +119,43 @@ namespace SingletonDesignPattern
             int curRow = e.RowIndex;
             int i = 1;
             List<string> currentData = new List<string>();
-            foreach (DataGridViewCell s in dataGridView1.Rows[e.RowIndex].Cells)
+            foreach (DataGridViewCell s in dataGridView4.Rows[e.RowIndex].Cells)
             {
-                //panel1.Controls[i].Text = s.Value.ToString();
                 currentData.Add(s.Value.ToString());
                 i += 2;
             }
-
             textBox2.Text = currentData[0];
             textBox1.Text = currentData[1];
-            comboBox4.SelectedItem = db.GetSubjectNameByID(currentData[2]);
+            comboBox4.SelectedItem = db.GetFieldValueByID("Subjects", "sName", currentData[2]);
             richTextBox1.Text = currentData[3];
         }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox4.Enabled = checkBox2.Checked ? true : false;
+            textBox3.Enabled = checkBox2.Checked ? true : false;
+            comboBox6.Enabled = checkBox2.Checked ? true : false;
+            button2.Enabled = checkBox2.Checked ? true : false;
+        }
+
+        private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int curRow = e.RowIndex;
+            int i = 1;
+            List<string> currentData = new List<string>();
+            foreach (DataGridViewCell s in dataGridView5.Rows[e.RowIndex].Cells)
+            {
+                currentData.Add(s.Value.ToString());
+                i += 2;
+            }
+            textBox3.Text = currentData[0];
+            textBox4.Text = currentData[1];
+            comboBox6.SelectedItem = db.GetFieldValueByID("Class", "Cipher", currentData[2]);
+        }
+
+
+        //Tab Theme { filter, edit, submit } waiting for answer
+        //Tab Students { edit, submit } waiting for answer
+
     }
 }

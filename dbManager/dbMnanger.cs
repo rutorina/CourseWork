@@ -239,13 +239,16 @@ namespace dbManager
             connection.Close();
         }
 
-        public string GetSubjectNameByID(string id)
+        public string GetFieldValueByID(string tableName, string fieldName, string id)
         {
             try
             {
                 string res = null;
                 connection.Open();
-                cmd.CommandText = $"SELECT sName FROM Subjects WHERE Code = '{id}'";
+                if (tableName == "Class" || tableName == "Orders")
+                    cmd.CommandText = $"SELECT {fieldName} FROM {tableName} WHERE Number = '{id}'";
+                else
+                    cmd.CommandText = $"SELECT {fieldName} FROM {tableName} WHERE Code = '{id}'";
                 MySqlDataReader r = cmd.ExecuteReader();
                 r.Read();
                 res = r.GetString(0);
