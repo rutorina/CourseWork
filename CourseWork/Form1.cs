@@ -109,5 +109,10 @@ namespace SingletonDesignPattern
             comboBox4.Enabled = checkBox1.Checked ? true : false;
             richTextBox1.Enabled = checkBox1.Checked ? true : false;
         }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

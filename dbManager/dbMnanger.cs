@@ -7,11 +7,32 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using Logger;
+using System.IO;
 
 namespace dbManager
 {
     public class dbMnanger
     {
+        private string GetConnectionSrt()
+        {
+            try
+            {
+                string cSrt = null;
+                using (StreamReader sr = new StreamReader(@"E:\!College\KPZ\ConSrting.txt"))
+                {
+                    cSrt = sr.ReadLine();
+                }
+                return cSrt;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
+        }
+
+
+
         MySqlConnection connection;
         MySqlCommand cmd;
         private static dbMnanger instance = null;
@@ -19,7 +40,7 @@ namespace dbManager
 
         private dbMnanger()
         {
-            connection = new MySqlConnection("Server=jwkrush.com.ua;Database=kkte_nau;Uid=kkte_nau;Pwd=KkTe#NaU");
+            connection = new MySqlConnection(GetConnectionSrt());
 
             cmd = new MySqlCommand();
             cmd.Connection = connection;            
