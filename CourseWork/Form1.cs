@@ -61,6 +61,7 @@ namespace SingletonDesignPattern
             db.SelectRecords(dataGridView4, "Themes", "");
             db.SelectRecords(dataGridView5, "Students", "");
             db.SelectRecords(dataGridView6, "Class", "");
+            db.SelectRecords(dataGridView7, "Subjects", "");
         }
 
         /*
@@ -176,11 +177,34 @@ namespace SingletonDesignPattern
             textBox6.Enabled = checkBox3.Checked ? true : false;
         }
 
+        private void dataGridView7_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int curRow = e.RowIndex;
+            int i = 1;
+            List<string> currentData = new List<string>();
+            foreach (DataGridViewCell s in dataGridView7.Rows[e.RowIndex].Cells)
+            {
+                currentData.Add(s.Value.ToString());
+                i += 2;
+            }
+            textBox9.Text = currentData[0];
+            textBox10.Text = currentData[1];
+            textBox8.Text = currentData[2];
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox8.Enabled = checkBox4.Checked ? true : false;
+            textBox9.Enabled = checkBox4.Checked ? true : false;
+            textBox10.Enabled = checkBox4.Checked ? true : false;
+        }
+
 
 
         //Tab Theme { filter, edit, submit } waiting for answer
         //Tab Students { edit, submit } waiting for answer
         //Tab Class { edit, submit } waiting for answer
+        //Tab Subject { edit, submit } waiting for answer
 
     }
 }

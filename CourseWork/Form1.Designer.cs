@@ -93,7 +93,19 @@ namespace SingletonDesignPattern
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.dataGridView7 = new System.Windows.Forms.DataGridView();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
@@ -108,6 +120,8 @@ namespace SingletonDesignPattern
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -149,6 +163,15 @@ namespace SingletonDesignPattern
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.textBox8);
+            this.tabPage5.Controls.Add(this.button4);
+            this.tabPage5.Controls.Add(this.label13);
+            this.tabPage5.Controls.Add(this.textBox9);
+            this.tabPage5.Controls.Add(this.checkBox4);
+            this.tabPage5.Controls.Add(this.label14);
+            this.tabPage5.Controls.Add(this.label15);
+            this.tabPage5.Controls.Add(this.textBox10);
+            this.tabPage5.Controls.Add(this.dataGridView7);
             this.tabPage5.Location = new System.Drawing.Point(4, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -159,6 +182,7 @@ namespace SingletonDesignPattern
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Controls.Add(this.textBox7);
             this.tabPage4.Controls.Add(this.button3);
             this.tabPage4.Controls.Add(this.label10);
@@ -302,7 +326,7 @@ namespace SingletonDesignPattern
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(350, 125);
+            this.button1.Location = new System.Drawing.Point(350, 124);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 13;
@@ -312,7 +336,7 @@ namespace SingletonDesignPattern
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 111);
+            this.label3.Location = new System.Drawing.Point(39, 110);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(26, 13);
             this.label3.TabIndex = 12;
@@ -321,7 +345,7 @@ namespace SingletonDesignPattern
             // textBox2
             // 
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(42, 127);
+            this.textBox2.Location = new System.Drawing.Point(42, 126);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(92, 20);
             this.textBox2.TabIndex = 11;
@@ -329,7 +353,7 @@ namespace SingletonDesignPattern
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(42, 28);
+            this.checkBox1.Location = new System.Drawing.Point(42, 27);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(179, 17);
             this.checkBox1.TabIndex = 10;
@@ -349,7 +373,7 @@ namespace SingletonDesignPattern
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(157, 110);
+            this.label5.Location = new System.Drawing.Point(157, 109);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 7;
@@ -358,7 +382,7 @@ namespace SingletonDesignPattern
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 61);
+            this.label4.Location = new System.Drawing.Point(39, 60);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 6;
@@ -368,7 +392,7 @@ namespace SingletonDesignPattern
             // 
             this.comboBox4.Enabled = false;
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(160, 126);
+            this.comboBox4.Location = new System.Drawing.Point(160, 125);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(121, 21);
             this.comboBox4.TabIndex = 5;
@@ -385,7 +409,7 @@ namespace SingletonDesignPattern
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(42, 77);
+            this.textBox1.Location = new System.Drawing.Point(42, 76);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(472, 20);
             this.textBox1.TabIndex = 2;
@@ -404,7 +428,7 @@ namespace SingletonDesignPattern
             // 
             this.comboBox5.FormattingEnabled = true;
             this.comboBox5.Items.AddRange(new object[] {
-            "Усі елементи"});
+            "Усі предмети"});
             this.comboBox5.Location = new System.Drawing.Point(22, 45);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(167, 21);
@@ -724,6 +748,107 @@ namespace SingletonDesignPattern
             this.textBox7.Size = new System.Drawing.Size(110, 20);
             this.textBox7.TabIndex = 31;
             // 
+            // textBox8
+            // 
+            this.textBox8.Enabled = false;
+            this.textBox8.Location = new System.Drawing.Point(160, 126);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(110, 20);
+            this.textBox8.TabIndex = 40;
+            // 
+            // button4
+            // 
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(350, 124);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 39;
+            this.button4.Text = "Submit";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(39, 110);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(26, 13);
+            this.label13.TabIndex = 38;
+            this.label13.Text = "Код";
+            // 
+            // textBox9
+            // 
+            this.textBox9.Enabled = false;
+            this.textBox9.Location = new System.Drawing.Point(42, 126);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(92, 20);
+            this.textBox9.TabIndex = 37;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(42, 27);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(179, 17);
+            this.checkBox4.TabIndex = 36;
+            this.checkBox4.Text = "Включити режим редагування";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(157, 109);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(31, 13);
+            this.label14.TabIndex = 35;
+            this.label14.Text = "Курс";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(39, 60);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(39, 13);
+            this.label15.TabIndex = 34;
+            this.label15.Text = "Назва";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Enabled = false;
+            this.textBox10.Location = new System.Drawing.Point(42, 76);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(472, 20);
+            this.textBox10.TabIndex = 33;
+            // 
+            // dataGridView7
+            // 
+            this.dataGridView7.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView7.Location = new System.Drawing.Point(42, 197);
+            this.dataGridView7.Name = "dataGridView7";
+            this.dataGridView7.Size = new System.Drawing.Size(1195, 670);
+            this.dataGridView7.TabIndex = 32;
+            this.dataGridView7.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView7_CellClick);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.comboBox7);
+            this.groupBox2.Location = new System.Drawing.Point(533, 40);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(219, 84);
+            this.groupBox2.TabIndex = 32;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Фільтрація";
+            // 
+            // comboBox7
+            // 
+            this.comboBox7.FormattingEnabled = true;
+            this.comboBox7.Items.AddRange(new object[] {
+            "Усі курси"});
+            this.comboBox7.Location = new System.Drawing.Point(22, 45);
+            this.comboBox7.Name = "comboBox7";
+            this.comboBox7.Size = new System.Drawing.Size(167, 21);
+            this.comboBox7.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -736,6 +861,8 @@ namespace SingletonDesignPattern
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -755,6 +882,8 @@ namespace SingletonDesignPattern
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -823,6 +952,17 @@ namespace SingletonDesignPattern
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.DataGridView dataGridView7;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox comboBox7;
     }
 }
 
