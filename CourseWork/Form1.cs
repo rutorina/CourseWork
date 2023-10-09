@@ -60,6 +60,7 @@ namespace SingletonDesignPattern
                 "join Orders on ThemesByOrder.tOrder = Orders.Number");
             db.SelectRecords(dataGridView4, "Themes", "");
             db.SelectRecords(dataGridView5, "Students", "");
+            db.SelectRecords(dataGridView6, "Class", "");
         }
 
         /*
@@ -153,9 +154,33 @@ namespace SingletonDesignPattern
             comboBox6.SelectedItem = db.GetFieldValueByID("Class", "Cipher", currentData[2]);
         }
 
+        private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int curRow = e.RowIndex;
+            int i = 1;
+            List<string> currentData = new List<string>();
+            foreach (DataGridViewCell s in dataGridView6.Rows[e.RowIndex].Cells)
+            {
+                currentData.Add(s.Value.ToString());
+                i += 2;
+            }
+            textBox5.Text = currentData[0];
+            textBox6.Text = currentData[1];
+            textBox7.Text = currentData[2];
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox4.Enabled = checkBox3.Checked ? true : false;
+            textBox5.Enabled = checkBox3.Checked ? true : false;
+            textBox6.Enabled = checkBox3.Checked ? true : false;
+        }
+
+
 
         //Tab Theme { filter, edit, submit } waiting for answer
         //Tab Students { edit, submit } waiting for answer
+        //Tab Class { edit, submit } waiting for answer
 
     }
 }
