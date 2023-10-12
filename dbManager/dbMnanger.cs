@@ -262,6 +262,26 @@ namespace dbManager
             }
         }
 
+        public string GetForeignCode(string codeName, string table, string fieldName, string condition)
+        {
+            try
+            {
+                string res = null;
+                connection.Open();
+                cmd.CommandText = $"SELECT {codeName} FROM {table} WHERE {fieldName} = '{condition}'";
+                MySqlDataReader r = cmd.ExecuteReader();
+                r.Read();
+                res = r.GetString(0);
+                connection.Close();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
         /*
         public void Save()
         {

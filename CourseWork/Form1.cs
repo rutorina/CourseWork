@@ -74,6 +74,7 @@ namespace SingletonDesignPattern
         int curRow;
         string curTable = null;
         DataGridView dataGridView;
+        List<string> values = new List<string>();
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -245,6 +246,41 @@ namespace SingletonDesignPattern
 
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
         {
+            values.Clear();
+            switch (tabControl1.SelectedTab.Text)
+            {
+                case "Теми":
+                    {
+                        values.Add(textBox2.Text);
+                        values.Add(textBox1.Text);
+                        values.Add(db.GetForeignCode("Code", "Subjects", "sName", comboBox4.SelectedItem.ToString()));
+                        values.Add(richTextBox1.Text);
+                    }
+                    break;
+                case "Список студентів":
+                    {
+                        values.Add(textBox3.Text);
+                        values.Add(textBox4.Text);
+                        values.Add(db.GetForeignCode("Number", "Class", "Chipher", comboBox6.SelectedItem.ToString()));
+                    }
+                    break;
+                case "Групи":
+                    {
+                        values.Add(textBox5.Text);
+                        values.Add(textBox6.Text);
+                        values.Add(textBox7.Text);
+                    }
+                    break;
+                case "Предмети":
+                    {
+                        values.Add(textBox9.Text);
+                        values.Add(textBox10.Text);
+                        values.Add(textBox8.Text);
+                    }
+                    break;
+                default:
+                    break;    
+            }   
             //tabControl1.SelectedTab.Controls
         }
 
