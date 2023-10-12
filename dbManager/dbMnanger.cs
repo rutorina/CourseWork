@@ -146,11 +146,11 @@ namespace dbManager
         //не ну как бы вы можете сказать как оно +- должно работать но не факт что оно будет вам удобно :)
         //а, я не про это XD 
         //мне нужно тип кажой страницы как оно должно выглядеть, ща покажу про что я 
-        public void DeleteRecMySQL(string TableName, string Code)
+        public void DeleteRecMySQL(string TableName,string codeName, string Code)
         {
             try
             {
-                cmd.CommandText = $"delete from {TableName} where Code = '{Code}'";
+                cmd.CommandText = $"delete from {TableName} where {codeName} = '{Code}'";
                 connection.Open();
                 cmd.ExecuteNonQuery();
                 connection.Close();

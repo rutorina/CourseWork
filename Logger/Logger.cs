@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DocumentSaver;
+using System.Windows.Forms;
 
 namespace Logger
 {
@@ -11,6 +12,7 @@ namespace Logger
     { 
         private static Logger instance = null;
         private List<string> Logs = new List<string>();
+        public ListBox listBox;
 
         private Logger()
         {
@@ -28,12 +30,14 @@ namespace Logger
             Logs.Add(str);
         }
 
-        public void Save()
+        public void ShowLogs()
         {
-            DocumentSaver.DocumentSaver f = DocumentSaver.DocumentSaver.GetInstance();
-            f.Save(Logs);
-
+            listBox.Items.Clear();
+            foreach (string log in Logs)
+            {
+                listBox.Items.Add(log);
+            }
+            listBox.Items.Add("");
         }
-
     }
 }

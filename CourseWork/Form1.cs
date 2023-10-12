@@ -72,6 +72,8 @@ namespace SingletonDesignPattern
 
         dbMnanger db;
         int curRow;
+        string curTable = null;
+        DataGridView dataGridView;
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -116,9 +118,59 @@ namespace SingletonDesignPattern
             button1.Enabled = checkBox1.Checked ? true : false;
         }
 
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox4.Enabled = checkBox2.Checked ? true : false;
+            textBox3.Enabled = checkBox2.Checked ? true : false;
+            comboBox6.Enabled = checkBox2.Checked ? true : false;
+            button2.Enabled = checkBox2.Checked ? true : false;
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox4.Enabled = checkBox3.Checked ? true : false;
+            textBox5.Enabled = checkBox3.Checked ? true : false;
+            textBox6.Enabled = checkBox3.Checked ? true : false;
+        }
+
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox8.Enabled = checkBox4.Checked ? true : false;
+            textBox9.Enabled = checkBox4.Checked ? true : false;
+            textBox10.Enabled = checkBox4.Checked ? true : false;
+        }
+
+        private void setTable(string table, DataGridView dataGrid, int row)
+        {
+            curTable = table;
+            bindingSource1.DataSource = dataGrid.DataSource;
+            curRow = row;
+            dataGridView = dataGrid;
+            bindingNavigatorAddNewItem.Enabled = true;
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            setTable("Themes", (DataGridView)sender, e.RowIndex);
+            bindingNavigatorAddNewItem.Enabled = false;
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            setTable("Students", (DataGridView)sender, e.RowIndex);
+            bindingNavigatorAddNewItem.Enabled = false;
+        }
+
+        private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            setTable("ThemesByOrder", (DataGridView)sender, e.RowIndex);
+            bindingNavigatorAddNewItem.Enabled = false;
+        }
+
         private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int curRow = e.RowIndex;
+            curRow = e.RowIndex;
             int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView4.Rows[e.RowIndex].Cells)
@@ -130,19 +182,12 @@ namespace SingletonDesignPattern
             textBox1.Text = currentData[1];
             comboBox4.SelectedItem = db.GetFieldValueByID("Subjects", "sName", currentData[2]);
             richTextBox1.Text = currentData[3];
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox4.Enabled = checkBox2.Checked ? true : false;
-            textBox3.Enabled = checkBox2.Checked ? true : false;
-            comboBox6.Enabled = checkBox2.Checked ? true : false;
-            button2.Enabled = checkBox2.Checked ? true : false;
+            setTable("Themes", (DataGridView)sender, e.RowIndex);
         }
 
         private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int curRow = e.RowIndex;
+            curRow = e.RowIndex;
             int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView5.Rows[e.RowIndex].Cells)
@@ -153,11 +198,12 @@ namespace SingletonDesignPattern
             textBox3.Text = currentData[0];
             textBox4.Text = currentData[1];
             comboBox6.SelectedItem = db.GetFieldValueByID("Class", "Cipher", currentData[2]);
+            setTable("Students", (DataGridView)sender, e.RowIndex);
         }
 
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int curRow = e.RowIndex;
+            curRow = e.RowIndex;
             int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView6.Rows[e.RowIndex].Cells)
@@ -168,18 +214,12 @@ namespace SingletonDesignPattern
             textBox5.Text = currentData[0];
             textBox6.Text = currentData[1];
             textBox7.Text = currentData[2];
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox4.Enabled = checkBox3.Checked ? true : false;
-            textBox5.Enabled = checkBox3.Checked ? true : false;
-            textBox6.Enabled = checkBox3.Checked ? true : false;
+            setTable("Class", (DataGridView)sender, e.RowIndex);
         }
 
         private void dataGridView7_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int curRow = e.RowIndex;
+            curRow = e.RowIndex;
             int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView7.Rows[e.RowIndex].Cells)
@@ -190,21 +230,30 @@ namespace SingletonDesignPattern
             textBox9.Text = currentData[0];
             textBox10.Text = currentData[1];
             textBox8.Text = currentData[2];
+            setTable("Subjects", (DataGridView)sender, e.RowIndex);
         }
 
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        private void bindingNavigatorDeleteItem_Click_1(object sender, EventArgs e)
         {
-            textBox8.Enabled = checkBox4.Checked ? true : false;
-            textBox9.Enabled = checkBox4.Checked ? true : false;
-            textBox10.Enabled = checkBox4.Checked ? true : false;
+            if (curTable == null || curRow == -1)
+                return;
+            if (curTable == "Class" || curTable == "Orders")
+                db.DeleteRecMySQL(curTable, "Number", dataGridView[0, curRow].ToString());
+            else
+                db.DeleteRecMySQL(curTable, "Code", dataGridView[0, curRow].ToString());
         }
 
-
+        private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+            //tabControl1.SelectedTab.Controls
+        }
 
         //Tab Theme { filter, edit, submit } waiting for answer
         //Tab Students { edit, submit } waiting for answer
         //Tab Class { edit, submit } waiting for answer
         //Tab Subject { edit, submit } waiting for answer
 
+        //Add type field/tab
+        //button add 
     }
 }
