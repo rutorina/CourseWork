@@ -251,6 +251,8 @@ namespace SingletonDesignPattern
             {
                 case "Теми":
                     {
+                        if (textBox1.Text == "" || textBox2.Text == "" || comboBox4.SelectedIndex == -1 || richTextBox1.Text == "")
+                            return;
                         values.Add(textBox2.Text);
                         values.Add(textBox1.Text);
                         values.Add(db.GetForeignCode("Code", "Subjects", "sName", comboBox4.SelectedItem.ToString()));
@@ -259,6 +261,8 @@ namespace SingletonDesignPattern
                     break;
                 case "Список студентів":
                     {
+                        if (textBox3.Text == "" || textBox4.Text == "" || comboBox6.SelectedIndex == -1)
+                            return;
                         values.Add(textBox3.Text);
                         values.Add(textBox4.Text);
                         values.Add(db.GetForeignCode("Number", "Class", "Chipher", comboBox6.SelectedItem.ToString()));
@@ -266,6 +270,8 @@ namespace SingletonDesignPattern
                     break;
                 case "Групи":
                     {
+                        if (textBox5.Text == "" || textBox6.Text == "" || textBox7.Text == "")
+                            return;
                         values.Add(textBox5.Text);
                         values.Add(textBox6.Text);
                         values.Add(textBox7.Text);
@@ -273,15 +279,17 @@ namespace SingletonDesignPattern
                     break;
                 case "Предмети":
                     {
+                        if (textBox9.Text == "" || textBox10.Text == "" || textBox8.Text == "")
+                            return;
                         values.Add(textBox9.Text);
                         values.Add(textBox10.Text);
                         values.Add(textBox8.Text);
                     }
                     break;
                 default:
-                    break;    
-            }   
-            //tabControl1.SelectedTab.Controls
+                    break;
+            }
+            db.InsertMySQL(values, curTable);
         }
 
         //Tab Theme { filter, edit, submit } waiting for answer
