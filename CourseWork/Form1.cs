@@ -25,19 +25,13 @@ namespace SingletonDesignPattern
 
 
             //db.ExecuteMySQL("create table Subjects( Code int not null, sName text, Course tinyint, primary key(Code));");
-            //db.ExecuteMySQL("create table Themes ( Code int not null, tName text, tSubject int , tDescription text, primary key(Code), FOREIGN KEY (tSubject) REFERENCES Subjects(Code) );");
+            //db.ExecuteMySQL("create table Themes ( Code int not null, tName text, tType text, tSubject int , tDescription text, primary key(Code), FOREIGN KEY (tSubject) REFERENCES Subjects(Code) );");
             //db.ExecuteMySQL("create table Class ( Number int not null, Cipher text, Course tinyint, primary key(Number));");
             //db.ExecuteMySQL("create table Students ( Code int not null, FullName text, Class int , primary key(Code), foreign key (Class) references Class(Number));");
             //db.ExecuteMySQL("create table Orders (Number int not null, oYear int, Subject int , primary key(Number), foreign key (Subject) references Subjects(Code));");
             //db.ExecuteMySQL("create table ThemesByOrder ( Code int not null, Theme int , Student int , tOrder int , primary key(Code), foreign key (Theme) references Themes(Code), foreign key (Student) references Students(Code), foreign key (tOrder) references Orders(Number));");
-            //========================
-            //db.ExecuteMySQL("create table Themes(Code int not null, tName text, tSubject int, tDescription text, primary key(Code), FOREIGN KEY(tSubject) REFERENCES Subjects(Code)); ");
-            //db.ExecuteMySQL("create table Class ( Code int not null, Number int, Cipher text, Course tinyint, primary key(Code));");
-            //db.ExecuteMySQL("create table Students ( Code int not null, FullName text, Class int , primary key(Code), foreign key (Class) references Class(Code));");
-            //db.ExecuteMySQL("create table Orders ( Code int not null, Number int, oYear int, Subject int , primary key(Code), foreign key (Subject) references Subjects(Code));");
-            //db.ExecuteMySQL("create table ThemesByOrder ( Code int not null, Theme int , Student int , tOrder int , primary key(Code), foreign key (Theme) references Themes(Code), foreign key (Student) references Students(Code), foreign key (tOrder) references Orders(Code));");
 
-            //db.ExecuteMySQL("INSERT INTO Themes VALUES(1, 'randomTheme', 1, 'Theme description')");
+            //db.ExecuteMySQL("INSERT INTO Themes VALUES(1, 'randomTheme', 'randomThemeType', 1, 'Theme description')");
             //db.ExecuteMySQL("INSERT INTO Subjects VALUES(1, 'OIPZ', '4')");
             //db.ExecuteMySQL("INSERT INTO Class VALUES(731, 'П-731-31', 4)");
             //db.ExecuteMySQL("INSERT INTO Students VALUES(1, 'Serhii Kosianchuk', 731)");
@@ -116,7 +110,6 @@ namespace SingletonDesignPattern
             textBox2.Enabled = checkBox1.Checked ? true : false;
             comboBox4.Enabled = checkBox1.Checked ? true : false;
             richTextBox1.Enabled = checkBox1.Checked ? true : false;
-            button1.Enabled = checkBox1.Checked ? true : false;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -124,7 +117,6 @@ namespace SingletonDesignPattern
             textBox4.Enabled = checkBox2.Checked ? true : false;
             textBox3.Enabled = checkBox2.Checked ? true : false;
             comboBox6.Enabled = checkBox2.Checked ? true : false;
-            button2.Enabled = checkBox2.Checked ? true : false;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)

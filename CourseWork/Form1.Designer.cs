@@ -38,7 +38,6 @@ namespace SingletonDesignPattern
             this.додатиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.textBox8 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
@@ -50,7 +49,6 @@ namespace SingletonDesignPattern
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -59,7 +57,6 @@ namespace SingletonDesignPattern
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -69,7 +66,6 @@ namespace SingletonDesignPattern
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -105,6 +101,8 @@ namespace SingletonDesignPattern
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.comboBox8 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
@@ -124,6 +122,7 @@ namespace SingletonDesignPattern
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -165,8 +164,8 @@ namespace SingletonDesignPattern
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.groupBox3);
             this.tabPage5.Controls.Add(this.textBox8);
-            this.tabPage5.Controls.Add(this.button4);
             this.tabPage5.Controls.Add(this.label13);
             this.tabPage5.Controls.Add(this.textBox9);
             this.tabPage5.Controls.Add(this.checkBox4);
@@ -189,16 +188,6 @@ namespace SingletonDesignPattern
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(110, 20);
             this.textBox8.TabIndex = 40;
-            // 
-            // button4
-            // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(350, 124);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 39;
-            this.button4.Text = "Submit";
-            this.button4.UseVisualStyleBackColor = true;
             // 
             // label13
             // 
@@ -268,7 +257,6 @@ namespace SingletonDesignPattern
             // 
             this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Controls.Add(this.textBox7);
-            this.tabPage4.Controls.Add(this.button3);
             this.tabPage4.Controls.Add(this.label10);
             this.tabPage4.Controls.Add(this.textBox5);
             this.tabPage4.Controls.Add(this.checkBox3);
@@ -311,16 +299,6 @@ namespace SingletonDesignPattern
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(110, 20);
             this.textBox7.TabIndex = 31;
-            // 
-            // button3
-            // 
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(350, 124);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 30;
-            this.button3.Text = "Submit";
-            this.button3.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -388,7 +366,6 @@ namespace SingletonDesignPattern
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.button2);
             this.tabPage3.Controls.Add(this.label7);
             this.tabPage3.Controls.Add(this.textBox3);
             this.tabPage3.Controls.Add(this.checkBox2);
@@ -404,16 +381,6 @@ namespace SingletonDesignPattern
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Список студентів";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(350, 124);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 21;
-            this.button2.Text = "Submit";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -490,7 +457,6 @@ namespace SingletonDesignPattern
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.textBox2);
             this.tabPage2.Controls.Add(this.checkBox1);
@@ -509,16 +475,6 @@ namespace SingletonDesignPattern
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Теми";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(350, 124);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "Submit";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -751,7 +707,7 @@ namespace SingletonDesignPattern
             this.bindingNavigator1.BindingSource = this.bindingSource1;
             this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
             this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem;
-            this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.None;
+            this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
@@ -765,14 +721,14 @@ namespace SingletonDesignPattern
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem});
             this.bindingNavigator1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.bindingNavigator1.Location = new System.Drawing.Point(597, 966);
+            this.bindingNavigator1.Location = new System.Drawing.Point(0, 971);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(294, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(1729, 25);
             this.bindingNavigator1.TabIndex = 19;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -819,7 +775,7 @@ namespace SingletonDesignPattern
             this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
             this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMovePreviousItem.Text = "Переместить назад";
+            this.bindingNavigatorMovePreviousItem.Text = "0";
             // 
             // bindingNavigatorSeparator
             // 
@@ -848,7 +804,7 @@ namespace SingletonDesignPattern
             this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
             this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveNextItem.Text = "Переместить вперед";
+            this.bindingNavigatorMoveNextItem.Text = "0";
             // 
             // bindingNavigatorMoveLastItem
             // 
@@ -864,11 +820,31 @@ namespace SingletonDesignPattern
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.comboBox8);
+            this.groupBox3.Location = new System.Drawing.Point(533, 40);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(219, 84);
+            this.groupBox3.TabIndex = 41;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Фільтрація";
+            // 
+            // comboBox8
+            // 
+            this.comboBox8.FormattingEnabled = true;
+            this.comboBox8.Items.AddRange(new object[] {
+            "Усі курси"});
+            this.comboBox8.Location = new System.Drawing.Point(22, 45);
+            this.comboBox8.Name = "comboBox8";
+            this.comboBox8.Size = new System.Drawing.Size(167, 21);
+            this.comboBox8.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1729, 1005);
+            this.ClientSize = new System.Drawing.Size(1729, 996);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -901,6 +877,7 @@ namespace SingletonDesignPattern
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -938,8 +915,6 @@ namespace SingletonDesignPattern
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.CheckBox checkBox2;
@@ -949,7 +924,6 @@ namespace SingletonDesignPattern
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.DataGridView dataGridView5;
         private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.CheckBox checkBox3;
@@ -958,7 +932,6 @@ namespace SingletonDesignPattern
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.DataGridView dataGridView6;
         private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.CheckBox checkBox4;
@@ -981,6 +954,8 @@ namespace SingletonDesignPattern
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox comboBox8;
     }
 }
 
