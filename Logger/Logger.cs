@@ -32,12 +32,12 @@ namespace Logger
 
         public void ShowLogs()
         {
+            Logs.Add("------------");
             listBox.Items.Clear();
             foreach (string log in Logs)
             {
                 listBox.Items.Add(log);
             }
-            listBox.Items.Add("");
         }
     }
 }

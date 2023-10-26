@@ -31,8 +31,6 @@ namespace dbManager
             }
         }
 
-
-
         MySqlConnection connection;
         MySqlCommand cmd;
         private static dbMnanger instance = null;
@@ -174,7 +172,7 @@ namespace dbManager
                 switch (name)
                 {
                     case "Theme":
-                        cmd.CommandText = "SELECT DISTINCT tName FROM Themes";
+                        cmd.CommandText = "SELECT DISTINCT tType FROM Themes";
                         break;
                     case "Class":
                         cmd.CommandText = "SELECT DISTINCT cipher FROM Class";
@@ -250,8 +248,9 @@ namespace dbManager
                 else
                     cmd.CommandText = $"SELECT {fieldName} FROM {tableName} WHERE Code = '{id}'";
                 MySqlDataReader r = cmd.ExecuteReader();
-                r.Read();
-                res = r.GetString(0);
+                
+                if (r.Read())
+                    res = r.GetString(0);
                 connection.Close();
                 return res;
             }
@@ -271,7 +270,8 @@ namespace dbManager
                 cmd.CommandText = $"SELECT {codeName} FROM {table} WHERE {fieldName} = '{condition}'";
                 MySqlDataReader r = cmd.ExecuteReader();
                 r.Read();
-                res = r.GetString(0);
+                if (r.Read())
+                    res = r.GetString(0);
                 connection.Close();
                 return res;
             }
@@ -279,6 +279,28 @@ namespace dbManager
             {
                 MessageBox.Show(ex.Message);
                 return null;
+            }
+        }
+
+        public void updateRec(string tableName, string codeValue, List<string> values)
+        {
+            try
+            {                
+                List<string> fields = GetFieldsMySQL(tableName);
+                cmd.CommandText = $"UPDATE {tableName} SET ";
+                for (int i = 1; i < values.Count; i++)
+                {
+                    cmd.CommandText += $"{fields[i]} = '{values[i]}', ";
+                }
+                cmd.CommandText = cmd.CommandText.Remove(cmd.CommandText.Length - 2) + $" WHERE {fields[0]} = '{codeValue}'";
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
             }
         }
 

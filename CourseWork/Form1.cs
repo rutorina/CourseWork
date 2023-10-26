@@ -38,15 +38,46 @@ namespace SingletonDesignPattern
             //db.ExecuteMySQL("INSERT INTO Orders VALUES(23, 2023, 1)");
             //db.ExecuteMySQL("INSERT INTO ThemesByOrder VALUES(1, 1, 1, 23)");
 
+            List<object> tabEditComp0 = new List<object>();
+            tabEditComp0.Add("Themesdb");
+            tabEditComp0.Add(textBox2);//code
+            tabEditComp0.Add(textBox1);
+            tabEditComp0.Add(textBox11);
+            tabEditComp0.Add(comboBox4);
+            tabEditComp0.Add(richTextBox1);
+            editComponents.Add(tabEditComp0);
+
+            List<object> tabEditComp1 = new List<object>();
+            tabEditComp1.Add("Studentsdb");
+            tabEditComp1.Add(textBox3);
+            tabEditComp1.Add(textBox4);
+            tabEditComp1.Add(comboBox6);
+            editComponents.Add(tabEditComp1);
+
+            List<object> tabEditComp2 = new List<object>();
+            tabEditComp2.Add("Classdb");
+            tabEditComp2.Add(textBox5);
+            tabEditComp2.Add(textBox4);
+            tabEditComp2.Add(textBox6);
+            editComponents.Add(tabEditComp2);
+
+            List<object> tabEditComp3 = new List<object>();
+            tabEditComp3.Add("Subjectsdb");
+            tabEditComp3.Add(textBox9);
+            tabEditComp3.Add(textBox8);
+            tabEditComp3.Add(textBox10);
+            editComponents.Add(tabEditComp3);
 
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
             comboBox5.SelectedIndex = 0;
+            //comboBox9.SelectedIndex = 0;
             db.GetAllVar(comboBox1, "Theme");
             db.GetAllVar(comboBox2, "Class");
             db.GetAllVar(comboBox3, "Course");
             db.GetAllVar(comboBox4, "Subject");
+            db.GetAllVar(comboBox5, "Subject");
             db.GetAllVar(comboBox6, "Class");
 
             db.SelectRecords(dataGridView3, "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
@@ -56,14 +87,15 @@ namespace SingletonDesignPattern
             db.SelectRecords(dataGridView5, "Students", "");
             db.SelectRecords(dataGridView6, "Class", "");
             db.SelectRecords(dataGridView7, "Subjects", "");
+            
+            table.Add("Themes", dataGridView4);
+            table.Add("Students", dataGridView5);
+            table.Add("Class", dataGridView6);
+            table.Add("Subjects", dataGridView7);
         }
 
-        /*
-        protected void MyClosedHandler(object sender, EventArgs e)
-        {
-            //db.Save();
-        }*/
-
+        List<List<object>> editComponents = new List<List<object>>();
+        Dictionary<string, DataGridView> table = new Dictionary<string, DataGridView>();
         dbMnanger db;
         int curRow;
         string curTable = null;
@@ -77,7 +109,7 @@ namespace SingletonDesignPattern
                 db.SelectRecords(dataGridView1, "Themes", "");
                 return;
             }
-            db.SelectRecords(dataGridView1, "Themes", $"WHERE tName = '{comboBox1.SelectedItem.ToString()}'");
+            db.SelectRecords(dataGridView1, "Themes", $"WHERE tType = '{comboBox1.SelectedItem.ToString()}'");
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -106,32 +138,54 @@ namespace SingletonDesignPattern
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            textBox1.Enabled = checkBox1.Checked ? true : false;
-            textBox2.Enabled = checkBox1.Checked ? true : false;
-            comboBox4.Enabled = checkBox1.Checked ? true : false;
-            richTextBox1.Enabled = checkBox1.Checked ? true : false;
-        }
+            foreach (var item in editComponents[Convert.ToInt32(((CheckBox)sender).Tag)])
+            {
+                if(item != editComponents[Convert.ToInt32(((CheckBox)sender).Tag)][0])
+                    ((Control)item).Enabled = ((CheckBox)sender).Checked ? true : false;
+            }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox4.Enabled = checkBox2.Checked ? true : false;
-            textBox3.Enabled = checkBox2.Checked ? true : false;
-            comboBox6.Enabled = checkBox2.Checked ? true : false;
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox4.Enabled = checkBox3.Checked ? true : false;
-            textBox5.Enabled = checkBox3.Checked ? true : false;
-            textBox6.Enabled = checkBox3.Checked ? true : false;
-        }
-
-
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox8.Enabled = checkBox4.Checked ? true : false;
-            textBox9.Enabled = checkBox4.Checked ? true : false;
-            textBox10.Enabled = checkBox4.Checked ? true : false;
+            if (((CheckBox)sender).Checked == false)
+            {
+                //will I get bonked if I update the record on uncheck??????????
+                
+                bool empty = false;
+                foreach (var item in editComponents[Convert.ToInt32(((CheckBox)sender).Tag)])
+                {
+                    if (!item.ToString().Contains("db"))
+                    {
+                        if (((Control)item).Name.Contains("combo"))
+                        {
+                            if (((ComboBox)item).SelectedIndex == -1)
+                                empty = true;
+                        }
+                        else
+                        if (((Control)item).Text == "")
+                            empty = true;
+                    }
+                }
+                if (!empty)
+                {
+                    string tableName = editComponents[Convert.ToInt32(((CheckBox)sender).Tag)][0].ToString().Remove(editComponents[Convert.ToInt32(((CheckBox)sender).Tag)][0].ToString().Length - 2);
+                    values.Clear();
+                    foreach (var item in editComponents[Convert.ToInt32(((CheckBox)sender).Tag)])
+                    {
+                        if (!item.ToString().Contains("db"))
+                        {
+                            if (((Control)item).Name.Contains("combo"))
+                            {
+                                if(tableName == "Themes")
+                                    values.Add(db.GetForeignCode("Code", "Subjects", "sName", ((ComboBox)item).SelectedItem.ToString()));
+                                else
+                                    values.Add(db.GetForeignCode("Number", "Class", "Cipher", ((ComboBox)item).SelectedItem.ToString()));
+                            }
+                            else
+                                values.Add(((Control)item).Text);
+                        }
+                    }
+                    db.updateRec(tableName, values[0], values);
+                    db.SelectRecords(table[tableName], tableName, "");
+                }
+            }
         }
 
         private void setTable(string table, DataGridView dataGrid, int row)
@@ -164,45 +218,40 @@ namespace SingletonDesignPattern
         private void dataGridView4_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             curRow = e.RowIndex;
-            int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView4.Rows[e.RowIndex].Cells)
             {
                 currentData.Add(s.Value.ToString());
-                i += 2;
             }
             textBox2.Text = currentData[0];
             textBox1.Text = currentData[1];
-            comboBox4.SelectedItem = db.GetFieldValueByID("Subjects", "sName", currentData[2]);
-            richTextBox1.Text = currentData[3];
+            textBox11.Text = currentData[2];
+            comboBox4.SelectedItem = db.GetFieldValueByID("Subjects", "sName", currentData[3]);//2
+            richTextBox1.Text = currentData[4];
             setTable("Themes", (DataGridView)sender, e.RowIndex);
         }
 
         private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             curRow = e.RowIndex;
-            int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView5.Rows[e.RowIndex].Cells)
             {
                 currentData.Add(s.Value.ToString());
-                i += 2;
             }
             textBox3.Text = currentData[0];
             textBox4.Text = currentData[1];
-            comboBox6.SelectedItem = db.GetFieldValueByID("Class", "Cipher", currentData[2]);
+            comboBox6.SelectedItem = db.GetFieldValueByID("Class", "Cipher", currentData[2]);//2
             setTable("Students", (DataGridView)sender, e.RowIndex);
         }
 
         private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             curRow = e.RowIndex;
-            int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView6.Rows[e.RowIndex].Cells)
             {
                 currentData.Add(s.Value.ToString());
-                i += 2;
             }
             textBox5.Text = currentData[0];
             textBox6.Text = currentData[1];
@@ -213,12 +262,10 @@ namespace SingletonDesignPattern
         private void dataGridView7_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             curRow = e.RowIndex;
-            int i = 1;
             List<string> currentData = new List<string>();
             foreach (DataGridViewCell s in dataGridView7.Rows[e.RowIndex].Cells)
             {
                 currentData.Add(s.Value.ToString());
-                i += 2;
             }
             textBox9.Text = currentData[0];
             textBox10.Text = currentData[1];
@@ -284,12 +331,43 @@ namespace SingletonDesignPattern
             db.InsertMySQL(values, curTable);
         }
 
-        //Tab Theme { filter, edit, submit } waiting for answer
-        //Tab Students { edit, submit } waiting for answer
-        //Tab Class { edit, submit } waiting for answer
-        //Tab Subject { edit, submit } waiting for answer
+        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {/*
+            if (comboBox5.SelectedIndex == 0 && comboBox9.SelectedIndex == 0 && comboBox5.SelectedIndex != -1 && comboBox9.SelectedIndex != -1)// && comboBox3.SelectedIndex != -1
+            {
+                db.SelectRecords(dataGridView2, "Themes", "");
+                return;
+            }
+            if (comboBox9.SelectedIndex == 0 && comboBox5.SelectedIndex != 0 && comboBox5.SelectedIndex != -1 && comboBox9.SelectedIndex != -1)
+            {
+                db.SelectRecords(dataGridView2, "Themes", $"join Subjects on Themes.Subject = Subjects.Code WHERE Themes.Subject = '{db.GetForeignCode("Code", "Subjects", "sname", comboBox5.SelectedItem.ToString())}'");
+                return;
+            }
+            if (comboBox9.SelectedIndex != 0 && comboBox5.SelectedIndex == 0 && comboBox5.SelectedIndex != -1 && comboBox9.SelectedIndex != -1)
+            {
+                db.SelectRecords(dataGridView2, "Themes", $"join Class on Students.Class = Class.number WHERE Class.Cipher = '{comboBox9.SelectedItem.ToString()}'");
+                return;
+            }
+            if (comboBox5.SelectedIndex != -1 && comboBox9.SelectedIndex != -1)
+            {
+                db.SelectRecords(dataGridView2, "Themes", $"join Class on Students.Class = Class.number WHERE  Class.Course = '{comboBox5.SelectedItem.ToString()}' and  Class.Cipher = '{comboBox9.SelectedItem.ToString()}'");
+                return;
+            }*/
+            if(comboBox5.SelectedIndex != -1 && comboBox5.SelectedIndex != 0)
+                db.SelectRecords(dataGridView4, "Themes", $"join Subjects on Themes.Subject = Subjects.Code WHERE Themes.Subject = '{db.GetForeignCode("Code", "Subjects", "sname", comboBox5.SelectedItem.ToString())}'");
+        }
 
-        //Add type field/tab
-        //button add 
+        private void comboBox10_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //db.SelectRecords(dataGridView5, "Students", $"join Class on Students.Class = Class.number WHERE Class.Cipher = '{comboBox9.SelectedItem.ToString()}'");
+        }
+
+        //fix edit
+        //filter
+        //fix fields that Krush wants
+        //fix menu bar
+
+
+        //stop on the filtering 
     }
 }
