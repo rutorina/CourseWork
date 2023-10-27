@@ -72,12 +72,15 @@ namespace SingletonDesignPattern
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
             comboBox5.SelectedIndex = 0;
-            //comboBox9.SelectedIndex = 0;
+            comboBox10.SelectedIndex = 0;
             db.GetAllVar(comboBox1, "Theme");
             db.GetAllVar(comboBox2, "Class");
             db.GetAllVar(comboBox3, "Course");
+            db.GetAllVar(comboBox7, "Course");
+            db.GetAllVar(comboBox8, "Course");
             db.GetAllVar(comboBox4, "Subject");
             db.GetAllVar(comboBox5, "Subject");
+            db.GetAllVar(comboBox10, "Class");
             db.GetAllVar(comboBox6, "Class");
 
             db.SelectRecords(dataGridView3, "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
@@ -360,14 +363,23 @@ namespace SingletonDesignPattern
         private void comboBox10_SelectedIndexChanged(object sender, EventArgs e)
         {
             //db.SelectRecords(dataGridView5, "Students", $"join Class on Students.Class = Class.number WHERE Class.Cipher = '{comboBox9.SelectedItem.ToString()}'");
+            if (comboBox10.SelectedIndex != -1 && comboBox10.SelectedIndex != 0)
+                db.SelectRecords(dataGridView5, "Students", $"join Class on Students.Class = Class.number WHERE Class.Cipher = '{comboBox10.SelectedItem.ToString()}'");
         }
 
-        //fix edit
-        //filter
+        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox7.SelectedIndex != -1 && comboBox7.SelectedIndex != 0)
+                db.SelectRecords(dataGridView6, "Class", $"WHERE Course = '{comboBox7.SelectedItem.ToString()}'");
+        }
+
+        private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox8.SelectedIndex != -1 && comboBox8.SelectedIndex != 0)
+                db.SelectRecords(dataGridView7, "Subjects", $"WHERE Course = '{comboBox8.SelectedItem.ToString()}'");
+        }
+
         //fix fields that Krush wants
         //fix menu bar
-
-
-        //stop on the filtering 
     }
 }

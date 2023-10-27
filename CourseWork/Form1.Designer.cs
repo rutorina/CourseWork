@@ -205,6 +205,7 @@ namespace SingletonDesignPattern
             this.comboBox8.Name = "comboBox8";
             this.comboBox8.Size = new System.Drawing.Size(167, 21);
             this.comboBox8.TabIndex = 0;
+            this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
             // 
             // textBox8
             // 
@@ -317,6 +318,7 @@ namespace SingletonDesignPattern
             this.comboBox7.Name = "comboBox7";
             this.comboBox7.Size = new System.Drawing.Size(167, 21);
             this.comboBox7.TabIndex = 0;
+            this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
             // 
             // textBox7
             // 
