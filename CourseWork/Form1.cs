@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using dbManager;
 using Logger;
 using DocumentSaver;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace SingletonDesignPattern
 {
@@ -57,7 +58,7 @@ namespace SingletonDesignPattern
             List<object> tabEditComp2 = new List<object>();
             tabEditComp2.Add("Classdb");
             tabEditComp2.Add(textBox5);
-            tabEditComp2.Add(textBox4);
+            tabEditComp2.Add(textBox7);
             tabEditComp2.Add(textBox6);
             editComponents.Add(tabEditComp2);
 
@@ -67,13 +68,13 @@ namespace SingletonDesignPattern
             tabEditComp3.Add(textBox8);
             tabEditComp3.Add(textBox10);
             editComponents.Add(tabEditComp3);
-
+            /*
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
             comboBox5.SelectedIndex = 0;
-            comboBox10.SelectedIndex = 0;
-            db.GetAllVar(comboBox1, "Theme");
+            comboBox10.SelectedIndex = 0;*/
+            /*db.GetAllVar(comboBox1, "Theme");
             db.GetAllVar(comboBox2, "Class");
             db.GetAllVar(comboBox3, "Course");
             db.GetAllVar(comboBox7, "Course");
@@ -81,16 +82,18 @@ namespace SingletonDesignPattern
             db.GetAllVar(comboBox4, "Subject");
             db.GetAllVar(comboBox5, "Subject");
             db.GetAllVar(comboBox10, "Class");
-            db.GetAllVar(comboBox6, "Class");
-
-            db.SelectRecords(dataGridView3, "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
+            db.GetAllVar(comboBox6, "Class");*/
+            RefreshCombos();
+            /*
+            db.SelectRecords(dataGridView3, "ThemesByOrder.Code, tOrder, Themes.tName, Themes.tType, Themes.tDescription, oYear, Students.FullName ", "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
                 "join Students on ThemesByOrder.Student = Students.Code " +
                 "join Orders on ThemesByOrder.tOrder = Orders.Number");
             db.SelectRecords(dataGridView4, "Themes", "");
             db.SelectRecords(dataGridView5, "Students", "");
             db.SelectRecords(dataGridView6, "Class", "");
-            db.SelectRecords(dataGridView7, "Subjects", "");
-            
+            db.SelectRecords(dataGridView7, "Subjects", "");*/
+            RefreshGrids();
+
             table.Add("Themes", dataGridView4);
             table.Add("Students", dataGridView5);
             table.Add("Class", dataGridView6);
@@ -104,6 +107,10 @@ namespace SingletonDesignPattern
         string curTable = null;
         DataGridView dataGridView;
         List<string> values = new List<string>();
+
+        Word.Application word;
+        Word.Document doc;
+        Word.Range r;
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -187,6 +194,8 @@ namespace SingletonDesignPattern
                     }
                     db.updateRec(tableName, values[0], values);
                     db.SelectRecords(table[tableName], tableName, "");
+                    RefreshGrids();
+                    RefreshCombos();
                 }
             }
         }
@@ -284,6 +293,9 @@ namespace SingletonDesignPattern
                 db.DeleteRecMySQL(curTable, "Number", dataGridView[0, curRow].ToString());
             else
                 db.DeleteRecMySQL(curTable, "Code", dataGridView[0, curRow].ToString());
+
+            RefreshGrids();
+            RefreshCombos();
         }
 
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
@@ -293,27 +305,31 @@ namespace SingletonDesignPattern
             {
                 case "Теми":
                     {
-                        if (textBox1.Text == "" || textBox2.Text == "" || comboBox4.SelectedIndex == -1 || richTextBox1.Text == "")
+                        if (textBox1.Text == "" || textBox2.Text == "" || comboBox4.SelectedIndex == -1)
                             return;
+                        curTable = "Themes";
                         values.Add(textBox2.Text);
                         values.Add(textBox1.Text);
+                        values.Add(textBox11.Text);
                         values.Add(db.GetForeignCode("Code", "Subjects", "sName", comboBox4.SelectedItem.ToString()));
-                        values.Add(richTextBox1.Text);
+                        values.Add(richTextBox1.Text + " ");
                     }
                     break;
                 case "Список студентів":
                     {
                         if (textBox3.Text == "" || textBox4.Text == "" || comboBox6.SelectedIndex == -1)
                             return;
+                        curTable = "Students";
                         values.Add(textBox3.Text);
                         values.Add(textBox4.Text);
-                        values.Add(db.GetForeignCode("Number", "Class", "Chipher", comboBox6.SelectedItem.ToString()));
+                        values.Add(db.GetForeignCode("Number", "Class", "Cipher", comboBox6.SelectedItem.ToString()));
                     }
                     break;
                 case "Групи":
                     {
                         if (textBox5.Text == "" || textBox6.Text == "" || textBox7.Text == "")
                             return;
+                        curTable = "Class";
                         values.Add(textBox5.Text);
                         values.Add(textBox6.Text);
                         values.Add(textBox7.Text);
@@ -323,6 +339,7 @@ namespace SingletonDesignPattern
                     {
                         if (textBox9.Text == "" || textBox10.Text == "" || textBox8.Text == "")
                             return;
+                        curTable = "Subjects";
                         values.Add(textBox9.Text);
                         values.Add(textBox10.Text);
                         values.Add(textBox8.Text);
@@ -332,6 +349,8 @@ namespace SingletonDesignPattern
                     break;
             }
             db.InsertMySQL(values, curTable);
+            RefreshGrids();
+            RefreshCombos();
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
@@ -356,30 +375,392 @@ namespace SingletonDesignPattern
                 db.SelectRecords(dataGridView2, "Themes", $"join Class on Students.Class = Class.number WHERE  Class.Course = '{comboBox5.SelectedItem.ToString()}' and  Class.Cipher = '{comboBox9.SelectedItem.ToString()}'");
                 return;
             }*/
-            if(comboBox5.SelectedIndex != -1 && comboBox5.SelectedIndex != 0)
-                db.SelectRecords(dataGridView4, "Themes", $"join Subjects on Themes.Subject = Subjects.Code WHERE Themes.Subject = '{db.GetForeignCode("Code", "Subjects", "sname", comboBox5.SelectedItem.ToString())}'");
+            if(comboBox5.SelectedIndex == 0)            
+                db.SelectRecords(dataGridView4, "Themes", "");            
+            else if(comboBox5.SelectedIndex != -1 && comboBox5.SelectedIndex != 0)
+                db.SelectRecords(dataGridView4, "Themes", $"join Subjects on Themes.tSubject = Subjects.Code WHERE Themes.tSubject = '{db.GetForeignCode("Code", "Subjects", "sName", comboBox5.SelectedItem.ToString())}'");
         }
 
         private void comboBox10_SelectedIndexChanged(object sender, EventArgs e)
         {
             //db.SelectRecords(dataGridView5, "Students", $"join Class on Students.Class = Class.number WHERE Class.Cipher = '{comboBox9.SelectedItem.ToString()}'");
-            if (comboBox10.SelectedIndex != -1 && comboBox10.SelectedIndex != 0)
+            if (comboBox10.SelectedIndex == 0)
+                db.SelectRecords(dataGridView5, "Students", "");
+            else if (comboBox10.SelectedIndex != -1 && comboBox10.SelectedIndex != 0)
                 db.SelectRecords(dataGridView5, "Students", $"join Class on Students.Class = Class.number WHERE Class.Cipher = '{comboBox10.SelectedItem.ToString()}'");
         }
 
         private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox7.SelectedIndex != -1 && comboBox7.SelectedIndex != 0)
+            if (comboBox7.SelectedIndex == 0)
+                db.SelectRecords(dataGridView6, "Class", "");
+            else if (comboBox7.SelectedIndex != -1 && comboBox7.SelectedIndex != 0)
                 db.SelectRecords(dataGridView6, "Class", $"WHERE Course = '{comboBox7.SelectedItem.ToString()}'");
         }
 
         private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox8.SelectedIndex != -1 && comboBox8.SelectedIndex != 0)
+            if (comboBox8.SelectedIndex == 0)
+                db.SelectRecords(dataGridView7, "Subjects", "");
+            else if(comboBox8.SelectedIndex != -1 && comboBox8.SelectedIndex != 0)
                 db.SelectRecords(dataGridView7, "Subjects", $"WHERE Course = '{comboBox8.SelectedItem.ToString()}'");
         }
 
+        private void студентиБезТемиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (студентиБезТемиToolStripMenuItem.Checked)
+            {
+                студентиБезТемиToolStripMenuItem.BackColor = Color.Gray;
+                db.SelectRecords(dataGridView2, "Students", "WHERE NOT Code IN (SELECT Student FROM ThemesByOrder)");
+            }
+            else
+            {
+                студентиБезТемиToolStripMenuItem.BackColor = друкНаказуToolStripMenuItem.BackColor;
+                comboBox2_SelectedIndexChanged(comboBox2, e);
+            }
+        }
+
+        private void вільніТемиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (вільніТемиToolStripMenuItem.Checked)
+            {
+                вільніТемиToolStripMenuItem.BackColor = Color.Gray;
+                db.SelectRecords(dataGridView1, "Themes", "WHERE NOT Code IN (SELECT Theme FROM ThemesByOrder)");
+            }
+            else
+            {
+                вільніТемиToolStripMenuItem.BackColor = друкНаказуToolStripMenuItem.BackColor;
+                comboBox1_SelectedIndexChanged(comboBox1, e);
+            }
+        }
+
+        public void RefreshGrids()
+        {
+            comboBox1_SelectedIndexChanged(comboBox1, EventArgs.Empty);
+            comboBox2_SelectedIndexChanged(comboBox2, EventArgs.Empty);
+            db.SelectRecords(dataGridView3, "ThemesByOrder.Code, tOrder, Themes.tName, Themes.tType, Themes.tDescription, oYear, Students.FullName ", "ThemesByOrder", "join Themes on ThemesByOrder.Theme = Themes.Code " +
+                "join Students on ThemesByOrder.Student = Students.Code " +
+                "join Orders on ThemesByOrder.tOrder = Orders.Number");
+            db.SelectRecords(dataGridView4, "Themes", "");
+            db.SelectRecords(dataGridView5, "Students", "");
+            db.SelectRecords(dataGridView6, "Class", "");
+            db.SelectRecords(dataGridView7, "Subjects", "");
+        }
+
+        public void RefreshCombos()//need to get all comboboxes
+        {
+
+            comboBox1.Items.Clear();
+            comboBox2.Items.Clear();
+            comboBox3.Items.Clear();
+            comboBox4.Items.Clear();
+            comboBox5.Items.Clear();
+            comboBox6.Items.Clear();
+            comboBox7.Items.Clear();
+            comboBox8.Items.Clear();
+            comboBox10.Items.Clear();
+            comboBox1.Items.Add("Усі типи");
+            comboBox2.Items.Add("Всі групи");
+            comboBox3.Items.Add("Усі курси");
+            comboBox5.Items.Add("Усі предмети");
+            comboBox7.Items.Add("Усі курси");
+            comboBox8.Items.Add("Усі курси");
+           comboBox10.Items.Add("Усі группи");
+            db.GetAllVar(comboBox1, "Theme", "");
+            db.GetAllVar(comboBox2, "Class", "");
+            db.GetAllVar(comboBox3, "Course", "");
+            db.GetAllVar(comboBox4, "Subject", "");
+            db.GetAllVar(comboBox5, "Subject", "");
+            db.GetAllVar(comboBox6, "Class", "");
+            db.GetAllVar(comboBox7, "Course", "");
+            db.GetAllVar(comboBox8, "Course", "");
+            db.GetAllVar(comboBox10, "Class", "");
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
+            comboBox3.SelectedIndex = 0;
+            comboBox5.SelectedIndex = 0;
+            comboBox10.SelectedIndex = 0;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //RefreshCombos();
+        }
+
+        private void друкНаказуToolStripMenuItem_Click(object sender, EventArgs e)
+        {/*
+            try
+            {
+
+                word = new Word.Application();
+                word.Visible = true;
+                doc = word.Documents.Add();
+                Word.Selection currentSelection = word.Application.Selection;
+                string s = "Затверджую \vЗаступник директора з НР  \v___________ А.В.Майдан \v“___”______ " + DateTime.Now.Year + " р.\n";
+
+                currentSelection.TypeText(s);
+                int cur_pos = s.Length;
+                r = doc.Range(0, cur_pos);
+                r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                r.ParagraphFormat.IndentCharWidth(26);
+
+                currentSelection.TypeParagraph();
+
+                s = "РОЗПОРЯДЖЕННЯ\vвід «     »                   ";//2023р. № ________ м. Київ\vпро закріплення тем курсових проєктів за студентами спеціальності\v121 «Інженерія програмного забезпечення»\vгалузь знань «Інформаційні технології», з дисципліни\v«Об’єктно - орієнтоване програмування»\vдля груп П-731-31, П-732-32    на 2022 / 2023 н.р.\n";
+                s += DateTime.Now.Year + "р № ________ м. Київ" +
+                    "\vпро закріплення тем курсових проєктів за студентами спеціальності\v" +
+                    "121 «Інженерія програмного забезпечення»\v" +
+                    "галузь знань «Інформаційні технології», з дисципліни\v" +
+                    "«Об’єктно - орієнтоване програмування»\v" +
+                    "для груп П-731-31, П-732-32    на "; //2022 / 2023 н.р.\n";
+                s += (DateTime.Now.Year - 1) + " / " + DateTime.Now.Year + " н.р.\n";
+
+
+                currentSelection.TypeText(s);
+                r = doc.Range(cur_pos + 1, cur_pos + s.Length + 1);
+                cur_pos += s.Length;
+                r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                currentSelection.MoveRight();//move down
+                
+
+                List<string> classes = new List<string>();
+                classes.Add("П-731-31");
+                orderData data = db.GetDateForOder(classes);
+
+                r = doc.Range(cur_pos + 1, cur_pos + 1);
+                Word.Table t = doc.Tables.Add(r, data.fullName.Count + 1, 3);
+                t.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                t.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+
+
+                t.AllowPageBreaks = false;
+                t.Rows.AllowBreakAcrossPages = 0;
+                t.Rows[1].HeadingFormat = -1;
+
+                int tableCharCount = 19 + 22 + 8;
+                currentSelection.TypeText("Прізвище, імя та ПБ");
+                currentSelection.MoveRight();
+                currentSelection.TypeText("Тема курсового проекту");
+                currentSelection.MoveRight();
+                currentSelection.TypeText("Примітка");
+                currentSelection.MoveRight();
+
+                for (int i = 0; i < data.fullName.Count; i++)
+                {
+                    currentSelection.TypeText((i+1) + ". " + data.fullName[i]);
+                    currentSelection.MoveRight();
+                    currentSelection.TypeText(data.theme[i]);
+                    currentSelection.MoveRight();
+                    currentSelection.TypeText(data.clas[i]);
+                    currentSelection.MoveRight();
+                    tableCharCount += data.fullName[i].Length + data.theme[i].Length + data.clas[i].Length;
+                }
+
+
+                currentSelection.TypeParagraph();
+                currentSelection.TypeText("\n");
+
+                cur_pos += tableCharCount;
+
+                s = "Голова комісії						О.Висоцька ";
+                currentSelection.TypeText(s);
+                r = doc.Range(cur_pos + 1, cur_pos + s.Length + 1);
+                cur_pos += s.Length;
+                r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                r.ParagraphFormat.IndentFirstLineCharWidth(2);
+
+                currentSelection.TypeParagraph();
+
+                s = "\nВикладачі							О.Круш";
+                currentSelection.TypeText(s);
+                r = doc.Range(cur_pos + 1, cur_pos + s.Length + 1);
+                cur_pos += s.Length;
+                r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                r.ParagraphFormat.IndentFirstLineCharWidth(2);
+
+                currentSelection.TypeParagraph();
+
+                s = "\n 							           С.Терентьєва";
+                currentSelection.TypeText(s);
+                r = doc.Range(cur_pos + 10, cur_pos + s.Length + 8);
+                cur_pos += s.Length;
+                r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                //r.ParagraphFormat.IndentFirstLineCharWidth(25);
+
+                r = doc.Range(0, doc.Content.Characters.Count);
+                r.Font.Name = "Times New Roman";
+                r.Font.Size = 13;
+
+                word.Documents.Save(false);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                word.Quit();
+            }*/
+            
+            OrderForm oForm = new OrderForm();
+            if (oForm.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+
+                    word = new Word.Application();
+                    word.Visible = true;
+                    doc = word.Documents.Add();
+                    Word.Selection currentSelection = word.Application.Selection;
+                    string s = "Затверджую \vЗаступник директора з НР  \v___________ А.В.Майдан \v“___”______ " + DateTime.Now.Year + " р.\n";
+
+                    currentSelection.TypeText(s);
+                    int cur_pos = s.Length;
+                    r = doc.Range(0, cur_pos);
+                    r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                    r.ParagraphFormat.IndentCharWidth(26);
+
+                    currentSelection.TypeParagraph();
+
+                    s = "РОЗПОРЯДЖЕННЯ\vвід «     »                   ";//2023р. № ________ м. Київ\vпро закріплення тем курсових проєктів за студентами спеціальності\v121 «Інженерія програмного забезпечення»\vгалузь знань «Інформаційні технології», з дисципліни\v«Об’єктно - орієнтоване програмування»\vдля груп П-731-31, П-732-32    на 2022 / 2023 н.р.\n";
+                    s += DateTime.Now.Year + "р № ________ м. Київ" +
+                        "\vпро закріплення тем курсових проєктів за студентами спеціальності\v" +
+                        oForm.textBox3.Text + "\v" +
+                        //"121 «Інженерія програмного забезпечення»\v" +
+                        $"галузь знань «{oForm.textBox4.Text}», з дисципліни\v" +
+                        $"«{oForm.comboBox3.SelectedItem}»\v" +
+                        "для груп";
+                    for (int i = 0; i < oForm.listBox1.Items.Count; i++)
+                    {
+                        s += " " + oForm.listBox1.Items[i];
+                    }
+                    s+= "   на ";
+                    //"   на ";
+                    // "для груп П-731-31, П-732-32    на "; //2022 / 2023 н.р.\n";
+                    s += (DateTime.Now.Year - 1) + "/" + DateTime.Now.Year + " н.р.\n";
+
+
+                    currentSelection.TypeText(s);
+                    r = doc.Range(cur_pos + 1, cur_pos + s.Length + 1);
+                    cur_pos += s.Length;
+                    r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                    currentSelection.MoveRight();//move down
+
+
+                    List<string> classes = new List<string>();
+                    for (int i = 0; i < oForm.listBox1.Items.Count; i++)
+                    {
+                        classes.Add(oForm.listBox1.Items[i].ToString());
+                    }
+                    orderData data = db.GetDateForOder(classes);
+
+                    r = doc.Range(cur_pos + 1, cur_pos + 1);
+                    Word.Table t = doc.Tables.Add(r, data.fullName.Count + 1, 3);
+                    t.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                    t.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+
+
+                    t.AllowPageBreaks = false;
+                    t.Rows.AllowBreakAcrossPages = 0;
+                    t.Rows[1].HeadingFormat = -1;
+
+                    int tableCharCount = 19 + 22 + 8;
+                    currentSelection.TypeText("Прізвище, імя та ПБ");
+                    currentSelection.MoveRight();
+                    currentSelection.TypeText("Тема курсового проекту");
+                    currentSelection.MoveRight();
+                    currentSelection.TypeText("Примітка");
+                    currentSelection.MoveRight();
+
+                    for (int i = 0; i < data.fullName.Count; i++)
+                    {
+                        currentSelection.TypeText((i + 1) + ". " + data.fullName[i]);
+                        currentSelection.MoveRight();
+                        currentSelection.TypeText(data.theme[i]);
+                        currentSelection.MoveRight();
+                        currentSelection.TypeText(data.clas[i]);
+                        currentSelection.MoveRight();
+                        tableCharCount += data.fullName[i].Length + data.theme[i].Length + data.clas[i].Length;
+                    }
+
+
+                    currentSelection.TypeParagraph();
+                    currentSelection.TypeText("\n");
+
+                    cur_pos += tableCharCount;
+
+                    s = $"Голова комісії						{oForm.textBox1.Text} ";
+                    currentSelection.TypeText(s);
+                    r = doc.Range(cur_pos + 1, cur_pos + s.Length + 1);
+                    cur_pos += s.Length;
+                    r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                    r.ParagraphFormat.IndentFirstLineCharWidth(2);
+
+                    currentSelection.TypeParagraph();
+
+
+                    s = "\nВикладачі						";
+
+                    for (int i = 0; i < oForm.listBox2.Items.Count; i++)
+                    {
+                        if (i == 0)
+                            s += oForm.listBox2.Items[i];
+                        else
+                            s = "\n 							           " + oForm.listBox2.Items[i];
+
+
+                        currentSelection.TypeText(s);
+                        r = doc.Range(cur_pos + 1, cur_pos + s.Length + 1);
+                        cur_pos += s.Length;
+                        r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;
+                        //r.ParagraphFormat.IndentFirstLineCharWidth(2);
+
+                        currentSelection.TypeParagraph();
+                    }
+
+                    /*
+                    s = "\n 							           С.Терентьєва";
+                    currentSelection.TypeText(s);
+                    r = doc.Range(cur_pos + 10, cur_pos + s.Length + 8);
+                    cur_pos += s.Length;
+                    r.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphLeft;*/
+                    //r.ParagraphFormat.IndentFirstLineCharWidth(25);
+
+                    r = doc.Range(0, doc.Content.Characters.Count);
+                    r.Font.Name = "Times New Roman";
+                    r.Font.Size = 13;
+
+                    word.Documents.Save(false);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    word.Quit();
+                }
+            }
+        }
+
+
         //fix fields that Krush wants
         //fix menu bar
+
+        //fix bindingNavigatorAddNewItem_Click
+        //fix combobox 1 if there is something
+        //themes filtering fix
+
+        //select all in fillering combos
+
+        //fix selects where you join tables
+        //orders table??? it just exist and we don't do enything with it 
+
+        //how we define what goes in order
+        //do I need to change 121 «Інженерія програмного забезпечення»\vгалузь знань «Інформаційні технології», з дисципліни\v«Об’єктно - орієнтоване програмування»\\
+
+
+        //need to make form for order settings
+
+
+        //add button 
     }
 }

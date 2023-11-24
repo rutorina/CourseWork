@@ -59,6 +59,8 @@ namespace SingletonDesignPattern
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.comboBox10 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -83,6 +85,7 @@ namespace SingletonDesignPattern
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -105,8 +108,6 @@ namespace SingletonDesignPattern
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.comboBox10 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -115,6 +116,7 @@ namespace SingletonDesignPattern
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -127,7 +129,6 @@ namespace SingletonDesignPattern
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
             this.bindingNavigator1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -139,7 +140,7 @@ namespace SingletonDesignPattern
             this.додатиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1729, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(2161, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -148,18 +149,23 @@ namespace SingletonDesignPattern
             this.друкНаказуToolStripMenuItem.Name = "друкНаказуToolStripMenuItem";
             this.друкНаказуToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
             this.друкНаказуToolStripMenuItem.Text = "Друк наказу";
+            this.друкНаказуToolStripMenuItem.Click += new System.EventHandler(this.друкНаказуToolStripMenuItem_Click);
             // 
             // студентиБезТемиToolStripMenuItem
             // 
+            this.студентиБезТемиToolStripMenuItem.CheckOnClick = true;
             this.студентиБезТемиToolStripMenuItem.Name = "студентиБезТемиToolStripMenuItem";
             this.студентиБезТемиToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
             this.студентиБезТемиToolStripMenuItem.Text = "Студенти без теми";
+            this.студентиБезТемиToolStripMenuItem.Click += new System.EventHandler(this.студентиБезТемиToolStripMenuItem_Click);
             // 
             // вільніТемиToolStripMenuItem
             // 
+            this.вільніТемиToolStripMenuItem.CheckOnClick = true;
             this.вільніТемиToolStripMenuItem.Name = "вільніТемиToolStripMenuItem";
             this.вільніТемиToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.вільніТемиToolStripMenuItem.Text = "Вільні теми";
+            this.вільніТемиToolStripMenuItem.Click += new System.EventHandler(this.вільніТемиToolStripMenuItem_Click);
             // 
             // додатиToolStripMenuItem
             // 
@@ -413,6 +419,27 @@ namespace SingletonDesignPattern
             this.tabPage3.Text = "Список студентів";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.comboBox10);
+            this.groupBox4.Location = new System.Drawing.Point(533, 40);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(219, 84);
+            this.groupBox4.TabIndex = 42;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Фільтрація";
+            // 
+            // comboBox10
+            // 
+            this.comboBox10.FormattingEnabled = true;
+            this.comboBox10.Items.AddRange(new object[] {
+            "Усі группи"});
+            this.comboBox10.Location = new System.Drawing.Point(22, 45);
+            this.comboBox10.Name = "comboBox10";
+            this.comboBox10.Size = new System.Drawing.Size(167, 21);
+            this.comboBox10.TabIndex = 0;
+            this.comboBox10.SelectedIndexChanged += new System.EventHandler(this.comboBox10_SelectedIndexChanged);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -642,6 +669,7 @@ namespace SingletonDesignPattern
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.comboBox2);
             this.tabPage1.Controls.Add(this.comboBox3);
             this.tabPage1.Controls.Add(this.comboBox1);
@@ -657,6 +685,15 @@ namespace SingletonDesignPattern
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Розподіл тем по студентам";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(107, 831);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // comboBox2
             // 
@@ -775,14 +812,14 @@ namespace SingletonDesignPattern
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem});
             this.bindingNavigator1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.bindingNavigator1.Location = new System.Drawing.Point(0, 971);
+            this.bindingNavigator1.Location = new System.Drawing.Point(0, 1220);
             this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
             this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(1729, 25);
+            this.bindingNavigator1.Size = new System.Drawing.Size(2161, 25);
             this.bindingNavigator1.TabIndex = 19;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -874,32 +911,11 @@ namespace SingletonDesignPattern
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
             this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.comboBox10);
-            this.groupBox4.Location = new System.Drawing.Point(533, 40);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(219, 84);
-            this.groupBox4.TabIndex = 42;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Фільтрація";
-            // 
-            // comboBox10
-            // 
-            this.comboBox10.FormattingEnabled = true;
-            this.comboBox10.Items.AddRange(new object[] {
-            "Усі группи"});
-            this.comboBox10.Location = new System.Drawing.Point(22, 45);
-            this.comboBox10.Name = "comboBox10";
-            this.comboBox10.Size = new System.Drawing.Size(167, 21);
-            this.comboBox10.TabIndex = 0;
-            this.comboBox10.SelectedIndexChanged += new System.EventHandler(this.comboBox10_SelectedIndexChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1729, 996);
+            this.ClientSize = new System.Drawing.Size(2161, 1245);
             this.Controls.Add(this.bindingNavigator1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
@@ -918,6 +934,7 @@ namespace SingletonDesignPattern
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
@@ -933,7 +950,6 @@ namespace SingletonDesignPattern
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
             this.bindingNavigator1.ResumeLayout(false);
             this.bindingNavigator1.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1016,6 +1032,7 @@ namespace SingletonDesignPattern
         private System.Windows.Forms.TextBox textBox11;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox comboBox10;
+        private System.Windows.Forms.Button button1;
     }
 }
 
