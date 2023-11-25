@@ -57,7 +57,7 @@ namespace dbManager
                 instance = new dbMnanger();
             return instance;
         }
-
+        /*
         public void TableRecordsMySql(string tableName, DataGridView grid)
         {
             try
@@ -73,7 +73,7 @@ namespace dbManager
                 MessageBox.Show(ex.Message);
             }
             connection.Close();
-        }
+        }*/
 
         public List<string> GetFieldsMySQL(string TableName)
         {
@@ -102,14 +102,7 @@ namespace dbManager
         public void InsertMySQL(List<string> Fields, string TableName)
         {
             try
-            {/*
-                List<string> FieldNames = GetFieldsMySQL(TableName);
-                cmd.CommandText = $"insert into {TableName} (";//values
-                foreach (string field in FieldNames)
-                {
-                    cmd.CommandText += field + ", ";
-                }*/
-                //cmd.CommandText = cmd.CommandText.Remove(cmd.CommandText.Length - 2) + " VALUES (";
+            {
                 cmd.CommandText = $"insert into {TableName} VALUES (";
                 foreach (string field in Fields)
                 {
@@ -124,7 +117,6 @@ namespace dbManager
             {
                 MessageBox.Show(ex.ToString());
                 connection.Close();
-                //throw;
             }
         }
 
@@ -165,17 +157,13 @@ namespace dbManager
             }
         }
 
-        //select themes and thgemes.types
-        //select classes and classes.courses
-
         public void GetAllVar(ComboBox comboBox, string name, string condition)
         {
             try
-            {
-                //logger.Log("SELECT cipher FROM class");
+            { 
                 switch (name)
                 {
-                    case "Theme":
+                    case "ThemeType":
                         cmd.CommandText = $"SELECT DISTINCT tType FROM Themes {condition}";
                         break;
                     case "Class":
@@ -201,7 +189,6 @@ namespace dbManager
             }
             catch (Exception ex)
             {
-                //logger.Log(ex.Message.ToString());
                 connection.Close();
                 MessageBox.Show(ex.ToString());
                 throw ex;
@@ -292,7 +279,7 @@ namespace dbManager
             }
         }
 
-        public void SelectRecords(DataGridView dataGridView, string columns, string tableName, string condition)//display as ???? 
+        public void SelectRecords(DataGridView dataGridView, string columns, string tableName, string condition)
         {
             try
             {
@@ -325,26 +312,13 @@ namespace dbManager
             }
             connection.Close();
         }
-        /*
-        public List<string> oSelectCipher()
-        {
-
-        }*/
-
-        /*
-        public void Save()
-        {
-            logger.Save();
-        }*/
 
         public orderData GetDateForOder(List<string> Classes)
         {
             orderData data = new orderData();
 
             try
-            {/*
-                    cmd.CommandText = $"SELECT COUNT(Code) FORM ThemesByOrder INNER JOIN Students on ThemesByOrder.Student = Students.Code WHERE Students.Class = " +
-                        $"(SELECT Code FROM Class WHERE Cipher = {item})";*/
+            {
                 foreach (var item in Classes)
                 {
                     cmd.CommandText = $"SELECT FullName FROM Students WHERE Class = (SELECT Number FROM Class WHERE Cipher = '{item}')";
@@ -388,11 +362,35 @@ namespace dbManager
             }
             return data;
         }
-        //return class and take all info from the user???
 
+        public void Insert(string tableName, string fields, string values)
+        {
+            try
+            {
+                cmd.CommandText = $"INSERT INTO {tableName} ({fields}) VALUES {values}";
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+        }
 
-        // select subject 
-        // classes 
-        // get from user teaches names | speciality | galuz' znan'
+        public int GetMaxCode( string tableName)//string codeName,
+        {
+            int maxCode = 0;
+            cmd.CommandText = $"SELECT MAX(Code) FROM {tableName}";//{codeName}
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            MySqlDataReader r = cmd.ExecuteReader();
+            if (r.Read())
+                maxCode = Convert.ToInt32(r.GetString(0));
+            connection.Close();
+            return maxCode;
+        }
     }
 }

@@ -290,9 +290,9 @@ namespace SingletonDesignPattern
             if (curTable == null || curRow == -1)
                 return;
             if (curTable == "Class" || curTable == "Orders")
-                db.DeleteRecMySQL(curTable, "Number", dataGridView[0, curRow].ToString());
+                db.DeleteRecMySQL(curTable, "Number", dataGridView[0, curRow - 1].Value.ToString());
             else
-                db.DeleteRecMySQL(curTable, "Code", dataGridView[0, curRow].ToString());
+                db.DeleteRecMySQL(curTable, "Code", dataGridView[0, curRow - 1].Value.ToString());
 
             RefreshGrids();
             RefreshCombos();
@@ -466,7 +466,7 @@ namespace SingletonDesignPattern
             comboBox7.Items.Add("Усі курси");
             comboBox8.Items.Add("Усі курси");
            comboBox10.Items.Add("Усі группи");
-            db.GetAllVar(comboBox1, "Theme", "");
+            db.GetAllVar(comboBox1, "ThemeType", "");
             db.GetAllVar(comboBox2, "Class", "");
             db.GetAllVar(comboBox3, "Course", "");
             db.GetAllVar(comboBox4, "Subject", "");
@@ -740,6 +740,17 @@ namespace SingletonDesignPattern
                 }
             }
         }
+
+        private void додатиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            addForm aForm = new addForm();
+            if (aForm.ShowDialog() == DialogResult.OK)
+            {
+                RefreshGrids();
+                RefreshCombos();
+            }
+        }
+
 
 
         //fix fields that Krush wants
