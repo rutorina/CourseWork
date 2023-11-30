@@ -41,18 +41,18 @@ namespace SingletonDesignPattern
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.listBox2 = new System.Windows.Forms.ListBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
@@ -114,6 +114,7 @@ namespace SingletonDesignPattern
             this.label4.Size = new System.Drawing.Size(36, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Групи";
+            this.label4.Visible = false;
             // 
             // label5
             // 
@@ -123,6 +124,7 @@ namespace SingletonDesignPattern
             this.label5.Size = new System.Drawing.Size(113, 13);
             this.label5.TabIndex = 7;
             this.label5.Text = "Список обраних груп";
+            this.label5.Visible = false;
             // 
             // label6
             // 
@@ -159,6 +161,7 @@ namespace SingletonDesignPattern
             this.label9.Size = new System.Drawing.Size(31, 13);
             this.label9.TabIndex = 11;
             this.label9.Text = "Курс";
+            this.label9.Visible = false;
             // 
             // panel1
             // 
@@ -177,22 +180,36 @@ namespace SingletonDesignPattern
             this.panel1.Size = new System.Drawing.Size(746, 197);
             this.panel1.TabIndex = 12;
             // 
-            // comboBox1
+            // listBox1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(22, 50);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 13;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(529, 50);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(144, 134);
+            this.listBox1.TabIndex = 18;
+            this.listBox1.Visible = false;
             // 
-            // comboBox2
+            // button4
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(367, 50);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 14;
+            this.button4.Location = new System.Drawing.Point(367, 140);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 17;
+            this.button4.Text = "Видалити";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(367, 95);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 16;
+            this.button3.Text = "Додати";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // comboBox3
             // 
@@ -201,6 +218,25 @@ namespace SingletonDesignPattern
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(121, 21);
             this.comboBox3.TabIndex = 15;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(367, 50);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 14;
+            this.comboBox2.Visible = false;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(22, 50);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 13;
+            this.comboBox1.Visible = false;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -217,51 +253,23 @@ namespace SingletonDesignPattern
             this.panel2.Size = new System.Drawing.Size(753, 197);
             this.panel2.TabIndex = 13;
             // 
-            // button3
+            // listBox2
             // 
-            this.button3.Location = new System.Drawing.Point(367, 95);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "Додати";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Items.AddRange(new object[] {
+            "О.Круш",
+            "С.Терентьєва"});
+            this.listBox2.Location = new System.Drawing.Point(367, 50);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(144, 134);
+            this.listBox2.TabIndex = 21;
             // 
-            // button4
+            // textBox2
             // 
-            this.button4.Location = new System.Drawing.Point(367, 140);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 17;
-            this.button4.Text = "Видалити";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(529, 50);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(144, 134);
-            this.listBox1.TabIndex = 18;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(27, 50);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(142, 20);
-            this.textBox1.TabIndex = 11;
-            this.textBox1.Text = "О.Висоцька ";
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(211, 95);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 17;
-            this.button5.Text = "Додати";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.textBox2.Location = new System.Drawing.Point(198, 51);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(142, 20);
+            this.textBox2.TabIndex = 20;
             // 
             // button6
             // 
@@ -273,23 +281,23 @@ namespace SingletonDesignPattern
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // textBox2
+            // button5
             // 
-            this.textBox2.Location = new System.Drawing.Point(198, 51);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(142, 20);
-            this.textBox2.TabIndex = 20;
+            this.button5.Location = new System.Drawing.Point(211, 95);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 17;
+            this.button5.Text = "Додати";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // listBox2
+            // textBox1
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Items.AddRange(new object[] {
-            "О.Круш",
-            "С.Терентьєва"});
-            this.listBox2.Location = new System.Drawing.Point(367, 50);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(144, 134);
-            this.listBox2.TabIndex = 21;
+            this.textBox1.Location = new System.Drawing.Point(27, 50);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(142, 20);
+            this.textBox1.TabIndex = 11;
+            this.textBox1.Text = "О.Висоцька ";
             // 
             // textBox3
             // 

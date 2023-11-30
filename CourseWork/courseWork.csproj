@@ -60,6 +60,12 @@
     <Compile Include="addForm.Designer.cs">
       <DependentUpon>addForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DiplomaOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DiplomaOrderForm.Designer.cs">
+      <DependentUpon>DiplomaOrderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,16 +78,28 @@
     <Compile Include="OrderForm.Designer.cs">
       <DependentUpon>OrderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderSelectForm.Designer.cs">
+      <DependentUpon>OrderSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="addForm.resx">
       <DependentUpon>addForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DiplomaOrderForm.resx">
+      <DependentUpon>DiplomaOrderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderForm.resx">
       <DependentUpon>OrderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderSelectForm.resx">
+      <DependentUpon>OrderSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -110,14 +128,6 @@
     <ProjectReference Include="..\dbManager\dbManager.csproj">
       <Project>{02a8b16c-5e2d-4514-98d9-bd88645b1b60}</Project>
       <Name>dbManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DocumentSaver\DocumentSaver.csproj">
-      <Project>{e3fc6191-c6da-4ab5-8d8c-5b0e43bcfd98}</Project>
-      <Name>DocumentSaver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logger\Logger.csproj">
-      <Project>{bab1c26e-82b8-4dca-9a8f-f3c13444c644}</Project>
-      <Name>Logger</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

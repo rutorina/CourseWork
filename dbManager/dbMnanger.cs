@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
-using Logger;
+//using Logger;
 using System.IO;
 
 namespace dbManager
@@ -17,6 +17,16 @@ namespace dbManager
         public List<string> theme = new List<string>();
         public List<string> clas = new List<string>();
     }
+
+    public class diplomaOrderData
+    {
+        public List<string> clas = new List<string>();
+        public List<string> fullName = new List<string>();
+        public List<string> theme = new List<string>();
+        public List<string> teacher = new List<string>();
+        public List<string> position = new List<string>();
+    }
+
 
     public class dbMnanger
     {
@@ -41,7 +51,7 @@ namespace dbManager
         MySqlConnection connection;
         MySqlCommand cmd;
         private static dbMnanger instance = null;
-        Logger.Logger logger = Logger.Logger.GetInstance();
+        //Logger.Logger logger = Logger.Logger.GetInstance();
 
         private dbMnanger()
         {
@@ -83,7 +93,7 @@ namespace dbManager
                 cmd.CommandText = $"select * from INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{TableName}';";
                 connection.Open();
                 MySqlDataReader r = cmd.ExecuteReader();
-                while (r.Read())
+                while (r.Read() && !r.IsDBNull(0))
                 {
                     Fields.Add(r.GetString(3));
                 }
@@ -99,7 +109,7 @@ namespace dbManager
             }
         }
 
-        public void InsertMySQL(List<string> Fields, string TableName)
+        public void Insert(List<string> Fields, string TableName)
         {
             try
             {
@@ -160,28 +170,37 @@ namespace dbManager
         public void GetAllVar(ComboBox comboBox, string name, string condition)
         {
             try
-            { 
+            {
+                string table = "";
                 switch (name)
                 {
                     case "ThemeType":
                         cmd.CommandText = $"SELECT DISTINCT tType FROM Themes {condition}";
+                        table = "Themes";
+                        break;
+                    case "Teachers":
+                        cmd.CommandText = $"SELECT DISTINCT FullName FROM Teachers {condition}";
+                        table = "Teachers";
                         break;
                     case "Class":
                         cmd.CommandText = $"SELECT DISTINCT cipher FROM Class {condition}";
+                        table = "Class";
                         break;
                     case "Course":
                         cmd.CommandText = $"SELECT DISTINCT Course from Class {condition}";
+                        table = "Class";
                         break;
                     case "Subject":
                         cmd.CommandText = $"SELECT DISTINCT sName from Subjects {condition}";
+                        table = "Subjects";
                         break;
                     default:
                         break;
                 }
                 connection.Open();
                 MySqlDataReader r = cmd.ExecuteReader();
-                while (r.Read())
-                {
+                while (r.Read() && !r.IsDBNull(0))
+                {                    
                     comboBox.Items.Add(r.GetString(0));
                 }
                 connection.Close();
@@ -225,7 +244,7 @@ namespace dbManager
                     cmd.CommandText = $"SELECT {fieldName} FROM {tableName} WHERE Code = '{id}'";
                 MySqlDataReader r = cmd.ExecuteReader();
                 
-                if (r.Read())
+                if (r.Read() && !r.IsDBNull(0))
                     res = r.GetString(0);
                 connection.Close();
                 return res;
@@ -245,7 +264,7 @@ namespace dbManager
                 connection.Open();
                 cmd.CommandText = $"SELECT {codeName} FROM {table} WHERE {fieldName} = '{condition}'";
                 MySqlDataReader r = cmd.ExecuteReader();
-                if (r.Read())
+                if (r.Read() && !r.IsDBNull(0))
                     res = r.GetString(0);
                 connection.Close();
                 return res;
@@ -313,7 +332,7 @@ namespace dbManager
             connection.Close();
         }
 
-        public orderData GetDateForOder(List<string> Classes)
+        public orderData GetDateForOder(List<string> Classes, string order)
         {
             orderData data = new orderData();
 
@@ -321,11 +340,11 @@ namespace dbManager
             {
                 foreach (var item in Classes)
                 {
-                    cmd.CommandText = $"SELECT FullName FROM Students WHERE Class = (SELECT Number FROM Class WHERE Cipher = '{item}')";
+                    cmd.CommandText = $"SELECT FullName FROM Students WHERE Class = (SELECT Number FROM Class WHERE Cipher = '{item}') AND Code IN (SELECT Student FROM ThemesByOrder WHERE tOrder = '{order}')";
                     if (connection.State != ConnectionState.Open)
                         connection.Open();
                     MySqlDataReader r = cmd.ExecuteReader();
-                    if (r.Read())
+                    while (r.Read() && !r.IsDBNull(0))
                     {
                         data.fullName.Add(r.GetString(0));
                         data.clas.Add(item);
@@ -339,8 +358,9 @@ namespace dbManager
                     if (connection.State != ConnectionState.Open)
                         connection.Open();
                     MySqlDataReader r = cmd.ExecuteReader();
-                    if (r.Read())
+                    if (r.Read() && !r.IsDBNull(0))
                         data.theme.Add(r.GetString(0));
+                    connection.Close();
                 }
                 /*
                 cmd.CommandText = $"SELECT FullName FROM Students where Class = (SELECT Code FROM Class WHERE Cipher = {item})";
@@ -363,11 +383,99 @@ namespace dbManager
             return data;
         }
 
+        public diplomaOrderData GetDateForDiplomaOder(List<string> Classes, string order)
+        {
+            diplomaOrderData data = new diplomaOrderData();
+
+            try
+            {
+                foreach (var item in Classes)
+                {
+                    cmd.CommandText = $"SELECT FullName FROM Students WHERE Class = (SELECT Number FROM Class WHERE Cipher = '{item}') AND Code IN (SELECT Student FROM ThemesByOrder WHERE tOrder = '{order}')";
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+                    MySqlDataReader r = cmd.ExecuteReader();
+                    while (r.Read() && !r.IsDBNull(0))
+                    {
+                        data.fullName.Add(r.GetString(0));
+                        data.clas.Add(item);
+                    }
+                    connection.Close();
+                }
+
+                foreach (var name in data.fullName)
+                {
+                    cmd.CommandText = $"SELECT Themes.tName FROM ThemesByOrder JOIN Students on ThemesByOrder.Student = Students.Code JOIN Themes on ThemesByOrder.Theme = Themes.Code WHERE Students.FullName = '{name}' ";
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+                    MySqlDataReader r = cmd.ExecuteReader();
+                    if (r.Read() && !r.IsDBNull(0))
+                        data.theme.Add(r.GetString(0));
+                    connection.Close();
+                    r.Close();
+
+                    cmd.CommandText = $"SELECT Teachers.FullName FROM ThemesByOrder JOIN Students on ThemesByOrder.Student = Students.Code JOIN Teachers on ThemesByOrder.Teacher = Teachers.Code WHERE Students.FullName = '{name}' ";
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+                    r = cmd.ExecuteReader();
+                    if (r.Read() && !r.IsDBNull(0))
+                        data.teacher.Add(r.GetString(0));
+                    connection.Close();
+                    r.Close();
+
+                    cmd.CommandText = $"SELECT Teachers.Position FROM ThemesByOrder JOIN Students on ThemesByOrder.Student = Students.Code JOIN Teachers on ThemesByOrder.Teacher = Teachers.Code WHERE Students.FullName = '{name}' ";
+                    if (connection.State != ConnectionState.Open)
+                        connection.Open();
+                    r = cmd.ExecuteReader();
+                    if (r.Read() && !r.IsDBNull(0))
+                        data.position.Add(r.GetString(0));
+                    connection.Close();
+                }
+
+                connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
+            return data;
+        }
+
+        public List<string> GetClassesForOrder(string order)
+        {
+            List<string> classes = new List<string>();
+
+            try
+            {
+                List<string> tmp = new List<string>();
+                cmd.CommandText = $"SELECT Students.Class FROM ThemesByOrder JOIN Students on ThemesByOrder.Student = Students.Code WHERE tOrder = '{order}'";
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+                MySqlDataReader r = cmd.ExecuteReader();
+                while (r.Read() && !r.IsDBNull(0))
+                    tmp.Add(r.GetString(0));
+                connection.Close();
+                foreach (var item in tmp)
+                {
+                    classes.Add(GetFieldValueByID("Class", "Cipher", item));
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
+            return classes;
+        }
+
         public void Insert(string tableName, string fields, string values)
         {
             try
             {
-                cmd.CommandText = $"INSERT INTO {tableName} ({fields}) VALUES {values}";
+                cmd.CommandText = $"INSERT INTO {tableName} {fields} VALUES {values}";
                 if (connection.State != ConnectionState.Open)
                     connection.Open();
                 cmd.ExecuteNonQuery();
@@ -383,14 +491,31 @@ namespace dbManager
         public int GetMaxCode( string tableName)//string codeName,
         {
             int maxCode = 0;
-            cmd.CommandText = $"SELECT MAX(Code) FROM {tableName}";//{codeName}
+            string codeName = "Code";
+            if (tableName == "Class" || tableName == "Orders")
+                codeName = "Number";
+            cmd.CommandText = $"SELECT MAX({codeName}) FROM {tableName}";//{codeName}
             if (connection.State != ConnectionState.Open)
                 connection.Open();
             MySqlDataReader r = cmd.ExecuteReader();
-            if (r.Read())
+            if (r.Read() && !r.IsDBNull(0))
                 maxCode = Convert.ToInt32(r.GetString(0));
             connection.Close();
             return maxCode;
         }
+
+        public int GetOrderYear(string orderNumber)
+        {
+            cmd.CommandText = $"SELECT oYear FROM Orders WHERE Number = '{orderNumber}'";
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
+            MySqlDataReader r = cmd.ExecuteReader();
+            int year = 0;
+            if(r.Read() && !r.IsDBNull(0))
+                year = Convert.ToInt32(r.GetString(0));
+            connection.Close();
+            return year;
+        }   
+
     }
 }

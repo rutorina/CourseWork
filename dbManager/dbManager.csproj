@@ -101,11 +101,5 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Logger\Logger.csproj">
-      <Project>{bab1c26e-82b8-4dca-9a8f-f3c13444c644}</Project>
-      <Name>Logger</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

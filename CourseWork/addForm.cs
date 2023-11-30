@@ -165,33 +165,40 @@ namespace SingletonDesignPattern
             {
                 case 0:
                     tableName = "Students";
-                    fields = "Code, FullName";
+                    fields = "(Code, FullName";
                     if (comboBox2.SelectedIndex != -1)
                     {
                         fields += ", Class";
                         comboField = db.GetForeignCode("Number", "Class", "Cipher", comboBox2.SelectedItem.ToString());
                     }
+                    else
+                        fields += ")";
                     break;
                 case 1:
                     tableName = "Themes";
-                    fields = "Code, tName";
+                    fields = "(Code, tName";
                     if (comboBox2.SelectedIndex != -1)
                     {
                         fields += ", tType";
                         comboField = comboBox2.SelectedItem.ToString();
                     }
+                    else
+                        fields += ")";
                     break;
                 case 2:
                     tableName = "Subjects";
-                    fields = "Code, sName";
+                    fields = "(Code, sName";
                     if (comboBox2.SelectedIndex != -1)
                     {
                         fields += ", Course";
                         comboField = comboBox2.SelectedItem.ToString();
                     }
+                    else
+                        fields += ")";
                     break;
                 case 3:
-                    // TEACHERS
+                    tableName = "Teachers";
+                    fields = "(Code, FullName)";
                     break;
                 default:
                     break;
@@ -205,14 +212,18 @@ namespace SingletonDesignPattern
                     values += "('" + (code + i) + "', '" + res[i] + "'";
                     if (comboBox2.SelectedIndex != -1)
                         values += ", '" + comboField + "'), ";
+                    else
+                        values += "),";
                 }
             else
             {
                 values += "('" + (code) + "', '" + res[(int)(numericUpDown1.Value - 1)] + "'";
                 if (comboBox2.SelectedIndex != -1)
                     values += ", '" + comboField + "'), ";
+                else
+                    values += "),";
             }
-            values = values.Remove(values.Length - 2);
+            values = values.Remove(values.Length - 1);
 
             db.Insert(tableName, fields, values);
         }
